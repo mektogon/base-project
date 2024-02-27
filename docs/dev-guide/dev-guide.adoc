@@ -1,0 +1,48 @@
+= Руководство разработчика
+
+== База данных:
+В приложение используется база данных - https://www.postgresql.org/[PostgreSQL]
+
+=== Подключение к БД:
+База данных поднимается в контейнере Docker с портом 5430. +
+Чтобы подключиться к БД, необходимо воспользоваться командой из терминала контейнера:
+[source, text]
+----
+psql -U user_name -d db_name
+----
+
+== Запуск приложения
+Для запуска приложения можно воспользоваться UI Intellij IDEA, либо введя команду:
+[source, text]
+----
+gradlew bootRun -Pargs=-Dspring.profiles.active=DEV,--POSTGRES_HOST=jdbc:postgresql://localhost:5430,--POSTGRES_DB=auth_db,--POSTGRES_USR=postgres,--POSTGRES_PWD=postgres
+----
+
+== Генерация SQL-патча для Liquibase
+Генерация SQL-патча осуществляется командой
+[source, text]
+----
+gradlew createpatch -Ppatchname=create_user_table -Ptask=AM-385 -Ptype=DML -Ppatchversion=01.000.00
+----
+
+Описание аргументов:
+
+. *patchname* - Логическое наименование патча (Например: create_user_table)
+. *task* - Номер задачи, в рамках которой создавался скрипт (*Опциональный параметр*)
+. *type* - Тип патча (*Опциональный параметр*)
+    - *DDL* (SELECT, INSERT, UPDATE, DELETE)
+    - *DML* (CREATE, ALTER, DROP)
+. *patchversion* - Указание расположения патча (*Опциональный параметр*)
+
+== Блокировка зависимостей
+В приложение используется блокировка зависимостей для исключения непредвиденных проблем, связанных с зависимостями (см. подробнее https://docs.gradle.org/current/userguide/dependency_locking.html[docs.gradle] ) +
+Блокировка зависимостей осуществляется с помощью gradle task:
+[source, text]
+----
+gradlew dependencies --write-locks
+----
+После добавления или изменения зависимостей необходимо вызвать данную таску.
+
+== Метрики приложения
+Сбор метрик приложения осуществляется c помощью Prometheus и Grafana. +
+Для того чтобы проанализировать метрики, необходимо зайти по адресу Grafana: localhost:3001
