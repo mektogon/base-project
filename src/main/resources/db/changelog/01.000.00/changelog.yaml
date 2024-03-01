@@ -1,0 +1,7 @@
+databaseChangeLog:
+    - include:
+        file: 1709303888989_create_common_settings_table.sql
+        relativeToChangelogFile: true
+    - include:
+        file: 1709304025339_create_jobs_table.sql
+        relativeToChangelogFile: true
