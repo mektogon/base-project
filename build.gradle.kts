@@ -13,8 +13,31 @@ java {
 	sourceCompatibility = JavaVersion.VERSION_21
 }
 
-repositories {
-	mavenCentral()
+allprojects {
+	apply(plugin = "io.spring.dependency-management")
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencyLocking {
+		lockFile.set(file("$projectDir/gradle/lockfiles/${rootProject.name}-${version}.lockfile"))
+		lockAllConfigurations()
+	}
+
+	tasks.withType<Test> {
+		useJUnitPlatform()
+	}
+
+	tasks.jar {
+		enabled = false //Disable generation plain-file for jar-package
+	}
+
+	tasks.bootRun {
+		if (project.hasProperty("args")) { //Many arguments for bootRun
+			args(project.properties["args"]?.toString()?.split(","))
+		}
+	}
 }
 
 dependencies {
@@ -39,25 +62,6 @@ dependencies {
 	testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.testcontainers:postgresql")
-}
-
-dependencyLocking {
-	lockFile.set(file("$projectDir/gradle/lockfiles/${rootProject.name}-${version}.lockfile"))
-	lockAllConfigurations()
-}
-
-tasks.withType<Test> {
-	useJUnitPlatform()
-}
-
-tasks.jar {
-	enabled = false //Disable generation plain-file for jar-package
-}
-
-tasks.bootRun {
-	if (project.hasProperty("args")) { //Many arguments for bootRun
-		args(project.properties["args"]?.toString()?.split(","))
-	}
 }
 
 tasks.register("createpatch") {
