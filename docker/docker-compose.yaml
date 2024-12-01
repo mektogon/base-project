@@ -1,10 +1,10 @@
 version: "3"
 services:
   postgres:
-    container_name: postgres-15.3
-    image: postgres:15.3
+    container_name: postgres-17.2
+    image: postgres:17.2
     ports:
-      - "5430:5432"
+      - "5432:5432"
     restart: on-failure
     volumes:
       - ./base-project/postgresql/15.3/data:/var/lib/postgresql/data
@@ -18,8 +18,10 @@ services:
     container_name: app
     build: ../
     ports:
-      - "8081:8080"
+      - "8080:8080"
     restart: always
+    volumes:
+      - ./base-project/application/log:/log
     depends_on:
       postgres:
         condition: service_started

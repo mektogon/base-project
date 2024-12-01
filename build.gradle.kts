@@ -11,6 +11,7 @@ version = "01.000.00"
 
 java {
 	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
 }
 
 allprojects {
