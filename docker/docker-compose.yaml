@@ -14,8 +14,8 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USR}
       - POSTGRES_PASSWORD=${POSTGRES_PWD}
-  base-project:
-    container_name: app
+  back:
+    container_name: back
     build: ../
     ports:
       - "8080:8080"

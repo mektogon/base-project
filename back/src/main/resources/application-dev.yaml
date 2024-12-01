@@ -1,0 +1,8 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: ${LOCAL_POSTGRES_HOST}/${LOCAL_POSTGRES_DB}
+    username: ${LOCAL_POSTGRES_USR}
+    password: ${LOCAL_POSTGRES_PWD}
