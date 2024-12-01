@@ -22,8 +22,11 @@ gradlew bootRun -Pargs=-Dspring.profiles.active=DEV,--POSTGRES_HOST=jdbc:postgre
 Генерация SQL-патча осуществляется командой
 [source, text]
 ----
-gradlew createpatch -Ppatchname=create_user_table -Ptask=AM-385 -Ptype=DML -Ppatchversion=01.000.00
+gradlew createPatch -Ppatchname=create_user_table -Ptask=AM-385 -Ptype=DML -Ppatchversion=01.000.00
 ----
+
+=== Проверка приложения
+Чтобы выполнить проверку успешного запуска приложения , необходимо вызывать рест: "http://host:port/actuator/health"
 
 Описание аргументов:
 

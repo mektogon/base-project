@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
 
 logging:
   pattern:
@@ -33,7 +33,7 @@ spring:
     password: ${POSTGRES_PWD}
   liquibase:
     enabled: true
-    change-log: classpath:db/changelog/changelog.yaml
+    change-log: classpath:liquibase/changelog/changelog.yaml
   jpa:
     hibernate:
       ddl-auto: validate
