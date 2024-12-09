@@ -4,17 +4,23 @@ val copyLiquibaseResourcesToMainModule by tasks.registering(Copy::class) {
     description = "Задача, выполняющая копирование liquibase-каталога :database-модуля " +
             "в :back-модуль, для корректного запуска в Docker-контейнере."
     dependsOn(tasks.processResources)
-    from(sourceSets["main"].resources.srcDirs)
+    val buildSrcDir = layout.buildDirectory.dir("resources/main");
+
+    from(buildSrcDir)
     project(":back").the<SourceSetContainer>()["main"].output.resourcesDir?.let { into(it) }
+
+    doLast {
+        delete(buildSrcDir)
+    }
 }
 
 tasks {
     jar {
-        enabled = false //Disable generation plain-file for jar-package;
+        dependsOn(copyLiquibaseResourcesToMainModule)
+        enabled = true
     }
 
     bootJar {
-        dependsOn(copyLiquibaseResourcesToMainModule)
         enabled = false //Disable generation jar-package;
     }
 
