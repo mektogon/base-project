@@ -30,7 +30,7 @@ tasks {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    api("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.liquibase:liquibase-core")
 
     runtimeOnly("org.postgresql:postgresql")
