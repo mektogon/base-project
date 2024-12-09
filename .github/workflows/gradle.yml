@@ -63,7 +63,7 @@ jobs:
           arguments: bootJar
       - uses: actions/upload-artifact@v3
         with:
-          name: authorization-manager
-          path: ./build/libs
+          name: base-project
+          path: ./back/build/libs
           retention-days: 1
           if-no-files-found: error

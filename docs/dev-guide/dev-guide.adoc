@@ -42,7 +42,7 @@ gradlew createPatch -Ppatchname=create_user_table -Ptask=AM-385 -Ptype=DML -Ppat
 Блокировка зависимостей осуществляется с помощью gradle task:
 [source, text]
 ----
-gradlew dependencies --write-locks
+gradlew resolveAndLockAll --write-locks
 ----
 После добавления или изменения зависимостей необходимо вызвать данную таску.
 
