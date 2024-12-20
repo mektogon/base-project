@@ -1,31 +1,23 @@
-import java.io.ByteArrayOutputStream
-
-val copyLiquibaseResourcesToMainModule by tasks.registering(Copy::class) {
-    description = "Задача, выполняющая копирование liquibase-каталога :database-модуля " +
-            "в :back-модуль, для корректного запуска в Docker-контейнере."
-    dependsOn(tasks.processResources)
-    val buildSrcDir = layout.buildDirectory.dir("resources/main");
-
-    from(buildSrcDir)
-    project(":back").the<SourceSetContainer>()["main"].output.resourcesDir?.let { into(it) }
-
-    doLast {
-        delete(buildSrcDir)
-    }
-}
+﻿import java.io.ByteArrayOutputStream
 
 tasks {
     jar {
-        dependsOn(copyLiquibaseResourcesToMainModule)
+        //Исключаем, чтобы избежать конфликта выбора changelog.
+        exclude("**/liquibase/**")
         enabled = true
     }
 
     bootJar {
         enabled = false //Disable generation jar-package;
     }
+}
 
-    assemble {
-        dependsOn(copyLiquibaseResourcesToMainModule)
+sourceSets {
+    main {
+        resources {
+            //Исключаем, чтобы избежать конфликта выбора changelog.
+            exclude("**/liquibase/**")
+        }
     }
 }
 
@@ -146,5 +138,57 @@ tasks.register("createPatch") {
                 }
             }
         }
+    }
+}
+
+/**
+ * Функция получения списка модулей, использующих определенный подмодуль.
+ */
+fun getModulesUsingSubmodule(submoduleName: String): List<String> {
+    val result = mutableListOf<String>()
+    rootProject.allprojects.forEach { project ->
+        // Проверка всех конфигураций проекта на наличие зависимости с указанным именем
+        project.configurations.forEach { configuration ->
+            if (configuration.dependencies.any { dependency -> dependency.name == submoduleName }) {
+                result.add(project.name)
+            }
+        }
+    }
+    return result
+}
+
+//Оставляю как артефакт разработки, в качестве альтернативного решения распространения resources между модулями.
+tasks.register("copyLiquibaseResourcesToModule") {
+    description = "Копирует ресурсы Liquibase из модуля 'database' во все модули, которые его используют."
+
+    dependsOn(tasks.processResources)
+    val buildSrcDir = layout.buildDirectory.dir("resources/main/liquibase")
+    val srcAbsolutePath = buildSrcDir.get().asFile.absolutePath
+    val rootProjectName = rootProject.name
+    val targetResourcesPath = "/resources/main/liquibase"
+
+    doFirst {
+        val modulesUsingDatabase = getModulesUsingSubmodule(project.name)
+        println("Выполняем копирование resources из '$srcAbsolutePath'")
+        modulesUsingDatabase.forEach { moduleName ->
+
+            val targetAbsolutePath: String = if (rootProjectName == moduleName) {
+                "${rootProject.buildDir}${targetResourcesPath}"
+            } else {
+                "${rootProject.project(":$moduleName").buildDir}${targetResourcesPath}"
+            }
+
+            println("В модуль '$moduleName' каталог: $targetAbsolutePath")
+
+            copy {
+                from(srcAbsolutePath)
+                into(targetAbsolutePath)
+            }
+        }
+    }
+
+    doLast {
+        println("Выполняю очистку resources: '$srcAbsolutePath'!")
+        delete(buildSrcDir)
     }
 }

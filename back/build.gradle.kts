@@ -45,6 +45,19 @@ dependencies {
     testImplementation("org.testcontainers:postgresql")
 }
 
+sourceSets {
+    main {
+        resources {
+            srcDirs("${rootDir}/back/database/src/main/resources")
+        }
+    }
+    test {
+        resources {
+            srcDirs("${rootDir}/back/database/src/main/resources")
+        }
+    }
+}
+
 tasks.jar {
     enabled = false //Disable generation plain-file for jar-package
 }
