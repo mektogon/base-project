@@ -1,7 +1,7 @@
 plugins {
     `java-library`
-    id("org.springframework.boot") version "3.2.3"
-    id("io.spring.dependency-management") version "1.1.4"
+    id("org.springframework.boot") version "3.4.5"
+    id("io.spring.dependency-management") version "1.1.7"
 }
 
 subprojects {
@@ -30,10 +30,11 @@ subprojects {
 
 dependencies {
     implementation(project(":back:database"))
+
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("io.micrometer:micrometer-registry-prometheus:1.13.5")
-    implementation("io.springfox:springfox-swagger-ui:3.0.0")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
 
     annotationProcessor("org.projectlombok:lombok")
 

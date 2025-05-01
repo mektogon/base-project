@@ -1,0 +1,13 @@
+openapi: 3.1.0
+info:
+  title: Base Project
+  description: Шаблонный проект для быстрого старта разработки приложения
+  version: 01.000.00
+externalDocs:
+  description: Карточка приложения
+  url: protocol://host:port/docs/app
+servers:
+  - url: protocol://host:port
+    description: Адрес приложения
+paths: {}
+components: {}

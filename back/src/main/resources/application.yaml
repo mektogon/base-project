@@ -61,3 +61,7 @@ management:
     distribution:
       percentiles-histogram:
         "[http.server.requests]": true
+
+springdoc:
+  api-docs:
+    enabled: false
