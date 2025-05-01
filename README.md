@@ -9,8 +9,8 @@
 - PostgreSQL
 - Swagger
 
-## Руководство администратора
-Руководство по настройке приложения находится в [admin-guide.adoc](docs%2Fadmin-guide%2Fadmin-guide.adoc)
+## Справочная информация
+#### [Руководство администратора](docs/admin-guide/admin-guide.adoc)
+#### [Руководство backend-разработчика](docs/back-dev-guide/back-dev-guide.adoc)
+#### [Руководство frontend-разработчика](docs/front-dev-guide/front-dev-guide.adoc)
 
-## Руководство разработчика
-Руководство по управлению приложением находится в [dev-guide.adoc](docs%2Fdev-guide%2Fdev-guide.adoc)
