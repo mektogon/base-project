@@ -97,7 +97,7 @@ tasks.register("createPatch") {
         project.version
     }
 
-    val basePathToFile = project.layout.projectDirectory.dir("src/main/resources/db/changelog")
+    val basePathToFile = project.layout.projectDirectory.dir("src/main/resources/liquibase/changelog")
     val changelogName = "changelog.yaml"
     val patchName = "${System.currentTimeMillis()}_${project.property("patchname")}.sql"
     val gitUserName = getGitUserName()

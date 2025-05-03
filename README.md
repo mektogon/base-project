@@ -4,8 +4,9 @@
 ## Технологии
 Проект разрабатывался с использованием:
 
-- Spring Framework (Core, Boot, Data JPA, HikariCP, MVC)
+- Spring Framework (Core, Boot, Data JPA, HikariCP)
 - Lombok
+- MapStruct
 - PostgreSQL
 - Swagger
 

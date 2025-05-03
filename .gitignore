@@ -37,4 +37,7 @@ out/
 .vscode/
 
 ### Docker Volumes ###
-docker/base-project
+docker/volumes
+
+### Application Logs ###
+log/

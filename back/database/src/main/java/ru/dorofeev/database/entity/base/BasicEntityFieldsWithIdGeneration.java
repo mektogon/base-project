@@ -19,7 +19,7 @@ import java.util.UUID;
 @MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
-public class BasicEntityFieldsWithIdGeneration {
+public class BasicEntityFieldsWithIdGeneration extends BasicEntitySystemFields {
 
     /**
      * Идентификатор записи. (С автогенерацией)

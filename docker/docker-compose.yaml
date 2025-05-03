@@ -1,12 +1,12 @@
 services:
   postgres:
-    container_name: postgres-17.2
-    image: postgres:17.2
+    container_name: postgres-17.4
+    image: postgres:17.4
     ports:
       - "5432:5432"
     restart: on-failure
     volumes:
-      - ./base-project/postgresql/15.3/data:/var/lib/postgresql/data
+      - ./volumes/postgresql/17.4/data:/var/lib/postgresql/data
     env_file:
       - .env
     environment:
@@ -22,7 +22,7 @@ services:
       - "8080:8080"
     restart: always
     volumes:
-      - ./base-project/application/log:/log
+      - ./volumes/application/log:/log
     depends_on:
       postgres:
         condition: service_started
@@ -48,7 +48,7 @@ services:
       - "9090:9090"
     restart: on-failure
     volumes:
-      - ./base-project/prometheus:/prometheus
+      - ./volumes/prometheus:/prometheus
       - ./configuration/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
   grafana:
     container_name: grafana
@@ -57,7 +57,7 @@ services:
       - "3000:3000"
     restart: on-failure
     volumes:
-      - ./base-project/grafana:/var/lib/grafana
+      - ./volumes/grafana:/var/lib/grafana
       - ./configuration/grafana/dashboards:/etc/grafana/provisioning/dashboards
       - ./configuration/grafana/datasources:/etc/grafana/provisioning/datasources
     env_file:

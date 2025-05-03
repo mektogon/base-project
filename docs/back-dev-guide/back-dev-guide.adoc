@@ -15,7 +15,7 @@ psql -U user_name -d db_name
 Для запуска приложения можно воспользоваться UI Intellij IDEA, либо введя команду:
 [source, text]
 ----
-gradlew bootRun -Pargs=-Dspring.profiles.active=DEV,--POSTGRES_HOST=jdbc:postgresql://localhost:5430,--POSTGRES_DB=auth_db,--POSTGRES_USR=postgres,--POSTGRES_PWD=postgres
+gradlew bootRun -Pargs=-Dspring.profiles.active=DEV,--POSTGRES_HOST=jdbc:postgresql://localhost:5430,--POSTGRES_DB=db_name,--POSTGRES_USR=user_name,--POSTGRES_PWD=user_password
 ----
 
 == Генерация SQL-патча для Liquibase
