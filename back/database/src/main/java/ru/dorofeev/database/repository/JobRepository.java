@@ -1,4 +1,4 @@
-package ru.dorofeev.database.repository.job;
+package ru.dorofeev.database.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

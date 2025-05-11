@@ -49,3 +49,21 @@ gradlew resolveAndLockAll --write-locks
 == Метрики приложения
 Сбор метрик приложения осуществляется c помощью Prometheus и Grafana. +
 Для того чтобы проанализировать метрики, необходимо зайти по адресу Grafana: localhost:3001
+
+== Соглашения разработки
+
+=== PostgreSQL
+
+[source, text]
+----
+{tablename}_{columnname(s)}_{suffix}
+----
+
+Где suffix равен одному из:
+
+- pkey for a Primary Key constraint;
+- key for a Unique constraint;
+- excl for an Exclusion constraint;
+- idx for any other kind of index;
+- fkey for a Foreign key;
+- check for a Check constraint;

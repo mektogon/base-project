@@ -4,7 +4,8 @@
 CREATE TABLE job
 (
     id               UUID PRIMARY KEY                                                            NOT NULL,
-    name             VARCHAR(128)                                                                NOT NULL,
+    code             VARCHAR(128) UNIQUE                                                         NOT NULL,
+    display_name     VARCHAR(128)                                                                NOT NULL,
     description      VARCHAR(512)                                                                NULL,
     enabled          BOOLEAN                                                                     NOT NULL,
     status           VARCHAR(32) CHECK ( status IN ('IDLE', 'IN_PROGRESS') )                     NOT NULL,
@@ -19,7 +20,8 @@ CREATE TABLE job
 COMMENT ON TABLE job IS 'Таблица с запускаемыми задачами';
 
 COMMENT ON COLUMN job.id IS 'Идентификатор записи';
-COMMENT ON COLUMN job.name IS 'Уникальное наименование задачи';
+COMMENT ON COLUMN job.code IS 'Код задачи';
+COMMENT ON COLUMN job.display_name IS 'Наименование задачи';
 COMMENT ON COLUMN job.description IS 'Описание задачи';
 COMMENT ON COLUMN job.enabled IS 'Включена ли задача (true\false)';
 COMMENT ON COLUMN job.status IS 'Статус задачи работы задачи';

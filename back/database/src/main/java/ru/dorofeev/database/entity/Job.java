@@ -27,10 +27,16 @@ import ru.dorofeev.database.entity.enums.StatusType;
 public class Job extends BasicEntityFieldsWithIdGeneration {
 
     /**
-     * Уникальное наименование задачи
+     * Код задачи.
      */
-    @Column(name = "name")
-    private String name;
+    @Column(name = "code")
+    private String code;
+
+    /**
+     * Наименование задачи.
+     */
+    @Column(name = "display_name")
+    private String displayName;
 
     /**
      * Описание задачи.

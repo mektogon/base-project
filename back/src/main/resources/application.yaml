@@ -14,11 +14,11 @@ logging:
       max-history: 7
   level:
     root: ERROR
+    ru.dorofeev: DEBUG
     orb.hibernate.SQL: ERROR
     org.springframework.transaction: ERROR
     org.springframework.security: ERROR
     org.springframework.cache: ERROR
-    ru.dorofeev.baseproject: DEBUG
 
 spring:
   main:
