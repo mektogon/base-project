@@ -7,26 +7,47 @@ plugins {
 tasks {
 
     val buildAdminGuide = register("buildAdminGuide", AsciidoctorTask::class) {
-        setSourceDir(file("${rootDir}/docs/admin-guide"))
+        val currentSourceDir = "${rootDir}/docs/admin-guide"
+        setSourceDir(file(currentSourceDir))
         setOutputDir(file(file("${rootDir}/docs/build/docs")))
         sources(delegateClosureOf<PatternSet> {
             include("admin-guide.adoc")
         })
+        resources(delegateClosureOf<CopySpec> {
+            from("${currentSourceDir}/img") {
+                include("*.png", "*.jpg", "*.gif")
+            }
+            into("./img")
+        })
     }
 
     val buildBackDevGuide = register("buildBackDevGuide", AsciidoctorTask::class) {
-        setSourceDir(file("${rootDir}/docs/back-dev-guide"))
+        val currentSourceDir = "${rootDir}/docs/back-dev-guide"
+        setSourceDir(file(currentSourceDir))
         setOutputDir(file(file("${rootDir}/docs/build/docs")))
         sources(delegateClosureOf<PatternSet> {
             include("back-dev-guide.adoc")
         })
+        resources(delegateClosureOf<CopySpec> {
+            from("${currentSourceDir}/img") {
+                include("*.png", "*.jpg", "*.gif")
+            }
+            into("./img")
+        })
     }
 
     val buildFrontDevGuide = register("buildFrontDevGuide", AsciidoctorTask::class) {
-        setSourceDir(file("${rootDir}/docs/front-dev-guide"))
+        val currentSourceDir = "${rootDir}/docs/front-dev-guide"
+        setSourceDir(file(currentSourceDir))
         setOutputDir(file(file("${rootDir}/docs/build/docs")))
         sources(delegateClosureOf<PatternSet> {
             include("front-dev-guide.adoc")
+        })
+        resources(delegateClosureOf<CopySpec> {
+            from("${currentSourceDir}/img") {
+                include("*.png", "*.jpg", "*.gif")
+            }
+            into("./img")
         })
     }
 
