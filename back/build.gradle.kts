@@ -23,6 +23,7 @@ subprojects {
         api("org.projectlombok:lombok:1.18.34")
         api("org.mapstruct:mapstruct:1.6.3")
         api("org.mapstruct:mapstruct-processor:1.6.3")
+        api("org.projectlombok:lombok-mapstruct-binding:0.2.0")
 
         annotationProcessor("org.projectlombok:lombok:1.18.34")
     }
