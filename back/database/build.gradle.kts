@@ -116,9 +116,9 @@ tasks.register("createPatch") {
     }
 
     outputs.files(
-            "$basePathToFile/$changelogName", //Master-changelog
-            "$basePathToFile/$versionToCatalogLiquibase/$changelogName", //Local-changelog
-            "$basePathToFile/$versionToCatalogLiquibase/$patchName" //Patch-script
+        "$basePathToFile/$changelogName", //Master-changelog
+        "$basePathToFile/$versionToCatalogLiquibase/$changelogName", //Local-changelog
+        "$basePathToFile/$versionToCatalogLiquibase/$patchName" //Patch-script
     )
 
     doFirst {

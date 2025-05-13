@@ -4,6 +4,8 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
 }
 
+val lombokVersion = "1.18.34"
+
 subprojects {
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "org.springframework.boot")
@@ -20,12 +22,16 @@ subprojects {
 
     dependencies {
         api("org.slf4j:slf4j-api:2.0.16")
-        api("org.projectlombok:lombok:1.18.34")
-        api("org.mapstruct:mapstruct:1.6.3")
-        api("org.mapstruct:mapstruct-processor:1.6.3")
-        api("org.projectlombok:lombok-mapstruct-binding:0.2.0")
 
-        annotationProcessor("org.projectlombok:lombok:1.18.34")
+        compileOnly("org.projectlombok:lombok:$lombokVersion")
+        annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+
+        api("org.mapstruct:mapstruct:1.6.3")
+        annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
+        annotationProcessor("org.projectlombok:lombok-mapstruct-binding:0.2.0")
+
+        testCompileOnly("org.projectlombok:lombok:$lombokVersion")
+        testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
     }
 }
 
@@ -38,7 +44,15 @@ dependencies {
     implementation("io.micrometer:micrometer-registry-prometheus:1.13.5")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
 
-    annotationProcessor("org.projectlombok:lombok")
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+
+    api("org.mapstruct:mapstruct:1.6.3")
+    annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
+    annotationProcessor("org.projectlombok:lombok-mapstruct-binding:0.2.0")
+
+    testCompileOnly("org.projectlombok:lombok:$lombokVersion")
+    testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -61,16 +75,18 @@ sourceSets {
     }
 }
 
-tasks.jar {
-    enabled = false //Disable generation plain-file for jar-package
-}
-
-tasks.bootRun {
-    if (project.hasProperty("args")) { //Many arguments for bootRun
-        args(project.properties["args"]?.toString()?.split(","))
+tasks {
+    jar {
+        enabled = false //Disable generation plain-file for jar-package
     }
-}
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+    bootRun {
+        if (project.hasProperty("args")) { //Many arguments for bootRun
+            args(project.properties["args"]?.toString()?.split(","))
+        }
+    }
+
+    withType<Test> {
+        useJUnitPlatform()
+    }
 }
