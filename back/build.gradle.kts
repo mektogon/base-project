@@ -31,6 +31,7 @@ subprojects {
 dependencies {
     implementation(project(":back:database"))
 
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("io.micrometer:micrometer-registry-prometheus:1.13.5")
