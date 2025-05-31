@@ -6,9 +6,6 @@ spring:
     url: ${LOCAL_POSTGRES_HOST}/${LOCAL_POSTGRES_DB}
     username: ${LOCAL_POSTGRES_USR}
     password: ${LOCAL_POSTGRES_PWD}
-logging:
-  level:
-    root: DEBUG
 
 springdoc:
   api-docs:

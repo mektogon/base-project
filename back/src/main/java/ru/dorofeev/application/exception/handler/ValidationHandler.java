@@ -30,6 +30,7 @@ import java.util.stream.StreamSupport;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class ValidationHandler {
 
+    private static final String DEFAULT_WARN_MESSAGE = "Ошибка валидации при работе приложения: ";
     private final static String EMPTY_ERROR_FIELD = null;
 
     @Value("${app.system}")
@@ -38,6 +39,7 @@ public class ValidationHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse onMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        log.warn(DEFAULT_WARN_MESSAGE, ex);
         final List<ErrorData> commonErrors = Stream.concat(
                 ex.getBindingResult().getGlobalErrors().stream()
                         .map(error -> buildErrorData(EMPTY_ERROR_FIELD, error.getDefaultMessage())),
@@ -57,6 +59,7 @@ public class ValidationHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse onConstraintValidationException(ConstraintViolationException ex) {
+        log.warn(DEFAULT_WARN_MESSAGE, ex);
         final List<ErrorData> violations = ex.getConstraintViolations()
                 .stream()
                 .map(violation -> buildErrorData(
@@ -79,6 +82,7 @@ public class ValidationHandler {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse onMissingServletRequestParameterException(MissingServletRequestParameterException ex) {
+        log.warn(DEFAULT_WARN_MESSAGE, ex);
         return ErrorResponse.builder()
                 .system(system)
                 .code(ErrorType.VALIDATION_ERROR.getCode())
@@ -95,6 +99,7 @@ public class ValidationHandler {
     @ExceptionHandler(InvalidFormatException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     protected ErrorResponse onInvalidFormatException(InvalidFormatException ex) {
+        log.warn(DEFAULT_WARN_MESSAGE, ex);
         Optional<JsonMappingException.Reference> pathException = ex.getPath().stream().findFirst();
 
         String errorFieldName = null;
