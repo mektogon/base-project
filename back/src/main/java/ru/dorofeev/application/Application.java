@@ -14,7 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
                 version = "01.000.00"
         ),
         servers = @Server(
-                url = "protocol://host:port",
+                url = "protocol://host:port/",
                 description = "Адрес приложения"
         ),
         externalDocs = @ExternalDocumentation(
