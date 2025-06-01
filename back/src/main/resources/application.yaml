@@ -51,6 +51,8 @@ spring:
 management:
   endpoint:
     health:
+      probes:
+        enabled: true
       show-details: when_authorized
   endpoints:
     web:
