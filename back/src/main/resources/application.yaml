@@ -31,7 +31,7 @@ spring:
   config:
     import: optional:file:docker/.env[.properties]
   datasource:
-    url: ${POSTGRES_HOST}/${POSTGRES_DB}
+    url: ${POSTGRES_HOST}/${POSTGRES_DB}?prepareThreshold=0&targetServerType=primary
     username: ${POSTGRES_USR}
     password: ${POSTGRES_PWD}
   liquibase:

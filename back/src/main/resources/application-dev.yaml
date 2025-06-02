@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: ${LOCAL_POSTGRES_HOST}/${LOCAL_POSTGRES_DB}
+    url: ${LOCAL_POSTGRES_HOST}/${LOCAL_POSTGRES_DB}?prepareThreshold=0&targetServerType=primary
     username: ${LOCAL_POSTGRES_USR}
     password: ${LOCAL_POSTGRES_PWD}
 
