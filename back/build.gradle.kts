@@ -16,8 +16,15 @@ subprojects {
         targetCompatibility = JavaVersion.VERSION_21
     }
 
-    tasks.jar {
-        enabled = false //Disable generation plain-file for jar-package
+    tasks {
+        jar {
+            enabled = true //Enable generation jar-plain.
+        }
+
+        bootJar {
+            enabled = false //Disable generate executable jar.
+
+        }
     }
 
     dependencies {

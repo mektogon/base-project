@@ -4,11 +4,6 @@ tasks {
     jar {
         //Исключаем, чтобы избежать конфликта выбора changelog.
         exclude("**/liquibase/**")
-        enabled = true
-    }
-
-    bootJar {
-        enabled = false //Disable generation jar-package;
     }
 }
 
