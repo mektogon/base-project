@@ -28,10 +28,9 @@ import java.util.stream.StreamSupport;
 @Slf4j
 @RestControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class ValidationHandler {
+public class ValidationHandler extends BaseHandler {
 
     private static final String DEFAULT_WARN_MESSAGE = "Ошибка валидации при работе приложения: ";
-    private final static String EMPTY_ERROR_FIELD = null;
 
     @Value("${app.system}")
     private String system;
@@ -98,7 +97,7 @@ public class ValidationHandler {
 
     @ExceptionHandler(InvalidFormatException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    protected ErrorResponse onInvalidFormatException(InvalidFormatException ex) {
+    public ErrorResponse onInvalidFormatException(InvalidFormatException ex) {
         log.warn(DEFAULT_WARN_MESSAGE, ex);
         Optional<JsonMappingException.Reference> pathException = ex.getPath().stream().findFirst();
 
@@ -117,20 +116,6 @@ public class ValidationHandler {
                                 ex.getMessage()
                         )
                 ))
-                .build();
-    }
-
-    /**
-     * Метод формирования объекта типа {@link ErrorData}.
-     *
-     * @param errorField   наименование параметра, в котором произошла ошибка.
-     * @param errorMessage сообщение с ошибкой, выводимое на UI.
-     * @return объект типа {@link ErrorData}.
-     */
-    private ErrorData buildErrorData(String errorField, String errorMessage) {
-        return ErrorData.builder()
-                .errorField(errorField)
-                .errorMessage(errorMessage)
                 .build();
     }
 }
