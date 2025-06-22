@@ -7,7 +7,14 @@ externalDocs:
   description: Карточка приложения
   url: protocol://host:port/docs/app
 servers:
-  - url: protocol://host:port/
+  - url: "{protocol}://{host}:{port}/"
     description: Адрес приложения
+    variables:
+      protocol:
+        default: http
+      host:
+        default: localhost
+      port:
+        default: "8081"
 paths: {}
 components: {}

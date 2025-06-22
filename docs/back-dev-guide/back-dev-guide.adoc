@@ -50,6 +50,9 @@ gradlew resolveAndLockAll --write-locks
 Сбор метрик приложения осуществляется c помощью Prometheus и Grafana. +
 Для того чтобы проанализировать метрики, необходимо зайти по адресу Grafana: localhost:3001
 
+== API
+При локальном запуске API доступно по ссылке swagger`а: http://localhost:8081/swagger-ui/index.html
+
 == Соглашения разработки
 
 === PostgreSQL
