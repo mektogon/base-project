@@ -70,3 +70,9 @@ management:
 springdoc:
   api-docs:
     enabled: false
+
+http-client:
+  timeout:
+    read: 30000
+    write: 30000
+    connection: 5000
