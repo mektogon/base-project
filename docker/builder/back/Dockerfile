@@ -1,6 +1,7 @@
 FROM gradle:jdk21-alpine AS builder
 
 COPY ../../../back back
+COPY ../../../docs docs
 COPY ../../../build.gradle.kts settings.gradle.kts lombok.config ./
 
 RUN gradle dependencies --no-daemon

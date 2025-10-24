@@ -17,7 +17,7 @@ public class ApplicationTest {
     @Bean
     @ServiceConnection
     public PostgreSQLContainer<?> postgresContainer() {
-        PostgreSQLContainer<?> postgresContainer = new PostgreSQLContainer<>("postgres:17.4")
+        PostgreSQLContainer<?> postgresContainer = new PostgreSQLContainer<>("postgres:18.0")
                 .withDatabaseName("test_db")
                 .withUsername("test")
                 .withPassword("test")

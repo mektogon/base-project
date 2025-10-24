@@ -1,12 +1,12 @@
 services:
   postgres:
-    container_name: postgres-17.4
-    image: postgres:17.4
+    container_name: postgres-18.0
+    image: postgres:18.0
     ports:
       - "5432:5432"
     restart: on-failure
     volumes:
-      - ./volumes/postgresql/17.4/data:/var/lib/postgresql/data
+      - ./volumes/postgresql/18.0/data:/var/lib/postgresql
     env_file:
       - .env
     environment:

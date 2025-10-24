@@ -1,20 +1,21 @@
 plugins {
     `java-library`
-    id("org.springframework.boot") version "3.4.5"
+    id("org.springframework.boot") version "3.5.7"
     id("io.spring.dependency-management") version "1.1.7"
 }
 
 val lombokVersion = "1.18.34"
 
+configure<JavaPluginExtension> {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(JavaVersion.VERSION_21.majorVersion.toInt()))
+    }
+}
+
 subprojects {
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "org.springframework.boot")
     apply(plugin = "java-library")
-
-    java {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-    }
 
     tasks {
         jar {
@@ -93,11 +94,14 @@ tasks {
 
     bootRun {
         if (project.hasProperty("args")) { //Many arguments for bootRun
-            args(project.properties["args"]?.toString()?.split(","))
+            args(project.properties["args"]?.toString()?.split(",") as Iterable<String>)
         }
     }
 
     withType<Test> {
         useJUnitPlatform()
+        testLogging {
+            events("passed", "skipped", "failed")
+        }
     }
 }

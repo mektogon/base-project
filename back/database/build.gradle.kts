@@ -34,9 +34,10 @@ tasks.register("createPatch") {
     fun getGitUserName(): String {
         val defaultAuthorText = "<AUTHOR NAME>"
         val outputStream = ByteArrayOutputStream()
+        val execOperations = project.objects.newInstance(ExecOperations::class.java)
 
         try {
-            exec {
+            execOperations.exec {
                 executable = "git"
                 args("config", "--get", "user.name")
                 standardOutput = outputStream
@@ -46,7 +47,7 @@ tasks.register("createPatch") {
                 println("Warn! The username is empty! Return the stub value: $defaultAuthorText")
                 defaultAuthorText
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             println("Error! Couldn't find git username! Return the stub value: $defaultAuthorText")
         }
 
@@ -168,9 +169,9 @@ tasks.register("copyLiquibaseResourcesToModule") {
         modulesUsingDatabase.forEach { moduleName ->
 
             val targetAbsolutePath: String = if (rootProjectName == moduleName) {
-                "${rootProject.buildDir}${targetResourcesPath}"
+                "${layout.buildDirectory.dir(targetResourcesPath).get().asFile.absolutePath}"
             } else {
-                "${rootProject.project(":$moduleName").buildDir}${targetResourcesPath}"
+                "${project(":$moduleName").layout.buildDirectory.dir(targetResourcesPath).get().asFile.absolutePath}"
             }
 
             println("В модуль '$moduleName' каталог: $targetAbsolutePath")
