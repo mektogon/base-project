@@ -67,6 +67,6 @@ jobs:
       - uses: actions/upload-artifact@v4.6.2
         with:
           name: base-project
-          path: ./back/build/libs
+          path: ./back/business-application/build/libs
           retention-days: 1
           if-no-files-found: error

@@ -1,12 +1,5 @@
 ﻿import java.io.ByteArrayOutputStream
 
-tasks {
-    jar {
-        //Исключаем, чтобы избежать конфликта выбора changelog.
-        exclude("**/liquibase/**")
-    }
-}
-
 sourceSets {
     main {
         resources {
@@ -21,6 +14,18 @@ dependencies {
     implementation("org.liquibase:liquibase-core")
 
     runtimeOnly("org.postgresql:postgresql")
+}
+
+tasks {
+    jar {
+        enabled = true //Enable generation jar-plain.
+        //Исключаем, чтобы избежать конфликта выбора changelog.
+        exclude("**/liquibase/**")
+    }
+
+    bootJar {
+        enabled = false //Disable generate executable jar.
+    }
 }
 
 tasks.register("createPatch") {
