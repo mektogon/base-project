@@ -1,13 +1,15 @@
 FROM gradle:jdk21-alpine AS builder
 
-COPY ../../../back back
-COPY ../../../docs docs
+COPY ../../../back/business-application ./back/business-application
+COPY ../../../back/database ./back/database
+COPY ../../../back/build.gradle.kts ./back/
+COPY ../../../docs ./docs
 COPY ../../../build.gradle.kts settings.gradle.kts lombok.config ./
 
 RUN gradle dependencies --no-daemon
 
-RUN gradle bootJar --no-daemon --stacktrace \
-    && ls -la /home/gradle/back/build/libs/
+RUN gradle :back:business-application:bootJar --no-daemon --stacktrace \
+    && ls -la /home/gradle/back/business-application/build/libs/
 
 FROM eclipse-temurin:21-jre-jammy
 
@@ -21,7 +23,7 @@ RUN adduser --system runner \
 
 USER runner
 
-COPY --from=builder /home/gradle/back/build/libs/*.jar app.jar
+COPY --from=builder /home/gradle/back/business-application/build/libs/*.jar app.jar
 
 EXPOSE 8080
 
