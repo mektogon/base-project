@@ -1,7 +1,6 @@
 package ru.dorofeev.database.entity.base;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
@@ -25,8 +24,7 @@ public class BasicEntityFieldsWithIdGeneration extends BasicEntitySystemFields {
      * Идентификатор записи. (С автогенерацией)
      */
     @Id
-    @UuidGenerator
-    @GeneratedValue
+    @UuidGenerator(style = UuidGenerator.Style.TIME)
     @Column(name = "id", nullable = false, updatable = false)
     private UUID id;
 }
