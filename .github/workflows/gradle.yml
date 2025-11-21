@@ -1,9 +1,19 @@
 name: Java CI with Gradle
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - 'main'
+      - 'master'
+      - 'develop'
+      - 'releases/*'
+      - 'hotfix/*'
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - 'main'
+      - 'master'
+      - 'develop'
+      - 'releases/*'
+      - 'hotfix/*'
 permissions:
   contents: read
 jobs:
@@ -55,7 +65,7 @@ jobs:
     needs: [ build, test ]
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest ]
+        os: [ ubuntu-latest ]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
