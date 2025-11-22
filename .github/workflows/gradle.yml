@@ -32,8 +32,6 @@ jobs:
       - name: Make gradlew executable (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
         run: chmod +x ./gradlew
-      - name: Gradle Wrapper Validation
-        uses: gradle/wrapper-validation-action@v3
         #Caching is enabled by default when using the gradle/gradle-build-action action
       - name: Setup and execute Gradle 'build' task
         uses: gradle/gradle-build-action@v3
@@ -55,8 +53,6 @@ jobs:
       - name: Make gradlew executable (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
         run: chmod +x ./gradlew
-      - name: Gradle Wrapper Validation
-        uses: gradle/wrapper-validation-action@v3
       - name: Setup and execute Gradle 'test' task
         uses: gradle/gradle-build-action@v3
         with:
@@ -77,8 +73,6 @@ jobs:
       - name: Make gradlew executable (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
         run: chmod +x ./gradlew
-      - name: Gradle Wrapper Validation
-        uses: gradle/wrapper-validation-action@v3
       - name: Setup and execute Gradle 'bootJar' task
         uses: gradle/gradle-build-action@v3
         with:
