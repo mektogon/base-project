@@ -1,6 +1,4 @@
-﻿import java.io.ByteArrayOutputStream
-
-sourceSets {
+﻿sourceSets {
     main {
         resources {
             //Исключаем, чтобы избежать конфликта выбора changelog.
@@ -38,17 +36,13 @@ tasks.register("createPatch") {
      */
     fun getGitUserName(): String {
         val defaultAuthorText = "<AUTHOR NAME>"
-        val outputStream = ByteArrayOutputStream()
-        val execOperations = project.objects.newInstance(ExecOperations::class.java)
 
         try {
-            execOperations.exec {
-                executable = "git"
-                args("config", "--get", "user.name")
-                standardOutput = outputStream
-            }
+            val process = ProcessBuilder("git", "config", "--get", "user.name").start()
+            val output = process.inputStream.bufferedReader().readText().trim()
+            process.waitFor()
 
-            return outputStream.toString().trimIndent().ifEmpty {
+            return output.ifEmpty {
                 println("Warn! The username is empty! Return the stub value: $defaultAuthorText")
                 defaultAuthorText
             }
