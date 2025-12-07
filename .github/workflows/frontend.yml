@@ -1,0 +1,32 @@
+name: React CI
+on:
+  push:
+    branches:
+      - 'main'
+      - 'develop'
+      - 'releases/*'
+      - 'hotfix/*'
+    paths:
+      - 'ui/**'
+      - '.github/workflows/frontend.yml'
+  pull_request:
+    branches:
+      - 'main'
+      - 'develop'
+      - 'releases/*'
+      - 'hotfix/*'
+    paths:
+      - 'ui/**'
+      - '.github/workflows/frontend.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
