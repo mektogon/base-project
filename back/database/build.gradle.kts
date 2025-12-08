@@ -9,6 +9,7 @@
 
 dependencies {
     api("org.springframework.boot:spring-boot-starter-data-jpa")
+    api("org.testcontainers:postgresql")
     implementation("org.liquibase:liquibase-core")
 
     runtimeOnly("org.postgresql:postgresql")

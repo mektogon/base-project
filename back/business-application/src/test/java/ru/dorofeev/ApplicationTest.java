@@ -14,6 +14,7 @@ import ru.dorofeev.application.Application;
 @TestConfiguration
 public class ApplicationTest {
 
+    @SuppressWarnings("resource")
     @Bean
     @ServiceConnection
     public PostgreSQLContainer<?> postgresContainer() {
