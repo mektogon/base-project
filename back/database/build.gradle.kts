@@ -12,6 +12,8 @@ dependencies {
     api("org.testcontainers:postgresql")
     implementation("org.liquibase:liquibase-core")
 
+    implementation("com.fasterxml.uuid:java-uuid-generator:5.2.0")
+
     runtimeOnly("org.postgresql:postgresql")
 }
 
