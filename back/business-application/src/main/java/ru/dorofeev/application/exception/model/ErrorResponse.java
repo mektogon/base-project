@@ -23,9 +23,6 @@ public class ErrorResponse {
     @Schema(description = "Код ошибки")
     private String code;
 
-    @Schema(description = "Тип ошибки")
-    private String type;
-
     @Schema(description = "Ошибки валидации")
     private List<ErrorData> validation;
 }

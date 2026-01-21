@@ -49,7 +49,6 @@ public class ValidationHandler extends BaseHandler {
         return ErrorResponse.builder()
                 .system(system)
                 .code(ErrorType.VALIDATION_ERROR.getCode())
-                .type(ErrorType.VALIDATION_ERROR.name())
                 .validation(commonErrors)
                 .build();
     }
@@ -73,7 +72,6 @@ public class ValidationHandler extends BaseHandler {
         return ErrorResponse.builder()
                 .system(system)
                 .code(ErrorType.VALIDATION_ERROR.getCode())
-                .type(ErrorType.VALIDATION_ERROR.name())
                 .validation(violations)
                 .build();
     }
@@ -85,7 +83,6 @@ public class ValidationHandler extends BaseHandler {
         return ErrorResponse.builder()
                 .system(system)
                 .code(ErrorType.VALIDATION_ERROR.getCode())
-                .type(ErrorType.VALIDATION_ERROR.name())
                 .validation(Collections.singletonList(
                         buildErrorData(
                                 ex.getParameterName(),
@@ -109,7 +106,6 @@ public class ValidationHandler extends BaseHandler {
         return ErrorResponse.builder()
                 .system(system)
                 .code(ErrorType.VALIDATION_ERROR.getCode())
-                .type(ErrorType.VALIDATION_ERROR.name())
                 .validation(Collections.singletonList(
                         buildErrorData(
                                 errorFieldName,

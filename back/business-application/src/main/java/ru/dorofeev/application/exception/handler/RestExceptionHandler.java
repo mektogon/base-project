@@ -29,23 +29,21 @@ public class RestExceptionHandler extends BaseHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected ErrorResponse handleException(Exception ex) {
+    public ErrorResponse handleException(Exception ex) {
         log.error(DEFAULT_ERROR_MESSAGE, ex);
         return ErrorResponse.builder()
                 .system(system)
                 .code(ErrorType.OTHER_EXCEPTION.getCode())
-                .type(ErrorType.OTHER_EXCEPTION.name())
                 .build();
     }
 
     @ExceptionHandler(BaseProjectException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected ErrorResponse handleException(BaseProjectException ex) {
+    public ErrorResponse handleException(BaseProjectException ex) {
         log.error(DEFAULT_ERROR_MESSAGE, ex);
         return ErrorResponse.builder()
                 .system(system)
                 .code(String.valueOf(ex.getErrorType().getCode()))
-                .type(ex.getErrorType().name())
                 .build();
     }
 
@@ -55,7 +53,6 @@ public class RestExceptionHandler extends BaseHandler {
         return ErrorResponse.builder()
                 .system(system)
                 .code(String.valueOf(HttpStatus.NOT_FOUND.value()))
-                .type(HttpStatus.NOT_FOUND.name())
                 .validation(Collections.singletonList(
                         buildErrorData(
                                 EMPTY_ERROR_FIELD,
@@ -74,7 +71,6 @@ public class RestExceptionHandler extends BaseHandler {
         return ErrorResponse.builder()
                 .system(system)
                 .code(String.valueOf(HttpStatus.METHOD_NOT_ALLOWED.value()))
-                .type(HttpStatus.METHOD_NOT_ALLOWED.name())
                 .validation(Collections.singletonList(
                         buildErrorData(
                                 EMPTY_ERROR_FIELD,

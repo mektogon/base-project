@@ -26,9 +26,4 @@ public class BaseProjectException extends RuntimeException {
      * Описание ошибки.
      */
     private final String errorDesc;
-
-    /**
-     * Сообщение с ошибкой, выводимое на UI.
-     */
-    private final String errorMessage;
 }

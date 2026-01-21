@@ -59,7 +59,7 @@ gradlew resolveAndLockAll --write-locks
 
 [source, text]
 ----
-{tablename}_{columnname(s)}_{suffix}
+{suffix}_{tablename}_{columnname(s)}
 ----
 
 Где suffix равен одному из:
