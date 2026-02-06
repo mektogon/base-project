@@ -1,22 +1,25 @@
 = Руководство backend-разработчика
 
 == База данных:
-В приложение используется база данных - https://www.postgresql.org/[PostgreSQL]
+. В приложение используется реляционная база данных - https://www.postgresql.org/[PostgreSQL]
+. В приложение используется key-value база данных - https://redis.io/[Redis]
 
-=== Подключение к БД:
-База данных поднимается в контейнере Docker с портом 5430. +
-Чтобы подключиться к БД, необходимо воспользоваться командой из терминала контейнера:
+=== Подключение к PostgreSQL:
+База данных поднимается в контейнере Docker с портом 5432. +
+Чтобы подключиться к реляционной БД, необходимо воспользоваться командой из терминала контейнера:
 [source, text]
 ----
 psql -U user_name -d db_name
 ----
+Либо использовать любой доступный UI-функционал. (Например: https://dbeaver.io/[DBeaver])
+
+=== Подключение к Redis:
+База данных поднимается в контейнере Docker с портом 6379. +
+Для подключения к БД можно воспользоваться  https://redis.io/insight/[Redis Insight]
 
 == Запуск приложения
-Для запуска приложения можно воспользоваться UI Intellij IDEA, либо введя команду:
-[source, text]
-----
-gradlew bootRun -Pargs=-Dspring.profiles.active=DEV,--POSTGRES_HOST=jdbc:postgresql://localhost:5430,--POSTGRES_DB=db_name,--POSTGRES_USR=user_name,--POSTGRES_PWD=user_password
-----
+Запуск проекта выполняется средствами Intellij Idea или любой другой удобной IDE. +
+Перед запуском проекта необходимо скорректировать .env-файл, указан корректные данные для подключения к системам.
 
 == Генерация SQL-патча для Liquibase
 Генерация SQL-патча осуществляется командой
@@ -47,11 +50,28 @@ gradlew resolveAndLockAll --write-locks
 После добавления или изменения зависимостей необходимо вызвать данную таску.
 
 == Метрики приложения
-Сбор метрик приложения осуществляется c помощью Prometheus и Grafana. +
-Для того чтобы проанализировать метрики, необходимо зайти по адресу Grafana: localhost:3001
+Сбор метрик приложения осуществляется c помощью Actuator.
 
 == API
-При локальном запуске API доступно по ссылке swagger`а: http://localhost:8081/swagger-ui/index.html
+При локальном запуске API доступно по ссылке swagger`а: http://localhost:port/swagger-ui/index.html +
+Обновление OpenApi возможно через вызов gradle-task "downloadOpenApiSpecification".
+
+=== Работа с API
+В приложении используется аутентификация средствами session cookie + CSRF.
+Для работы системы необходимо в Docker-е поднять два контейнера: Redis и PostgreSQL.
+
+После успешного запуска приложения необходимо:
+
+. Вызвать endpoint GET /settings/pre-login и из cookie достать значение "XSRF-TOKEN". Выполнить XOR-шифрование.
+. Выполнить регистрацию с помощью endpoint POST /authentication/registration, подложив в header "X-XSRF-TOKEN" шифрованное значение, полученное на п.1
+. Выполнить аутентификацию с помощью endpoint POST /authentication/login, подложив в header "X-XSRF-TOKEN" шифрованное значение, полученное на п.1
+. После успешной аутентификации "XSRF-TOKEN" будет изменен, для дальнейших вызовов endpoint-ов, необходимо будет выполнить XOR-шифрование нового токена и работать с ним.
+
+WARNING: Выполнить XOR-шифрование можно через "ru.dorofeev.unit.XOREncryptedTest"
+
+WARNING: Если вызов со стороны frontend, то XOR-операция токена должна выполняться перед каждым вызовом.
+
+WARNING: OpenApi располагается в /root/openapi/base-project/xxx.yaml
 
 == Соглашения разработки
 

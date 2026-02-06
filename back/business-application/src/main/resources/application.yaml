@@ -28,12 +28,17 @@ spring:
     banner-mode: OFF
   profiles:
     default: default
+    include:
+      - security
   config:
     import: optional:file:docker/.env[.properties]
   datasource:
     url: ${POSTGRES_HOST}/${POSTGRES_DB}?prepareThreshold=0&targetServerType=primary
     username: ${POSTGRES_USR}
     password: ${POSTGRES_PWD}
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 20
   liquibase:
     enabled: true
     change-log: classpath:liquibase/changelog/changelog.yaml
@@ -43,7 +48,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
       hibernate:
-        default_batch_fetch_size: 5
+        default_batch_fetch_size: 25
         batch_fetch_style: dynamic
         query:
           fail_on_pagination_over_collection_fetch: true
@@ -57,7 +62,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, prometheus
+        include: health, prometheus, sessions
   prometheus:
     metrics:
       export:

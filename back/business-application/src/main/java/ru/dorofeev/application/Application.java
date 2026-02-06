@@ -29,7 +29,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
                 }
         )
 )
-@SpringBootApplication
+@SpringBootApplication(
+        scanBasePackages = {
+                "ru.dorofeev"
+        }
+)
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

@@ -38,7 +38,6 @@ public class ValidationHandler extends BaseHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse onMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        log.warn(DEFAULT_WARN_MESSAGE, ex);
         final List<ErrorData> commonErrors = Stream.concat(
                 ex.getBindingResult().getGlobalErrors().stream()
                         .map(error -> buildErrorData(EMPTY_ERROR_FIELD, error.getDefaultMessage())),
@@ -57,7 +56,6 @@ public class ValidationHandler extends BaseHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse onConstraintValidationException(ConstraintViolationException ex) {
-        log.warn(DEFAULT_WARN_MESSAGE, ex);
         final List<ErrorData> violations = ex.getConstraintViolations()
                 .stream()
                 .map(violation -> buildErrorData(

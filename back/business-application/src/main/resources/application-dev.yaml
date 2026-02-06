@@ -1,5 +1,10 @@
 server:
   port: 8081
+  servlet:
+    session:
+      cookie:
+        path: "/"
+        secure: false
 
 spring:
   datasource:
@@ -16,16 +21,30 @@ management:
     health:
       show-details: always
 
+security:
+  endpoint:
+    white-list:
+      - "/actuator/**"
+      - "/v3/api-docs"
+      - "/v3/api-docs.yaml"
+      - "/swagger-ui/**"
+      - "/authentication/login"
+      - "/authentication/registration"
+      - "/authentication/password/reset"
+      - "/settings/pre-login"
+      - "/public/**"
+  cors:
+    allowed-origins:
+      - "http://localhost:3000"
+
 logging:
   level:
-    org:
-      springframework:
-        web:
-          filter:
-            CommonsRequestLoggingFilter: DEBUG
-      hibernate:
-        SQL: DEBUG
-        type:
-          descriptor:
-            sql:
-              BasicBinder: TRACE
+    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.security.web.csrf: TRACE
+    org.springframework.web: DEBUG
+    org.springframework.session: DEBUG
+    org.hibernate:
+      SQL: DEBUG
+      type.descriptor.sql.BasicBinder: TRACE
+    ru.dorofeev: DEBUG

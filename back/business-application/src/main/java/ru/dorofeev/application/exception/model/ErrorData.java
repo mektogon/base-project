@@ -18,6 +18,6 @@ public class ErrorData {
     @Schema(description = "Наименование системы")
     private String errorField;
 
-    @Schema(description = "Сообщение с ошибкой, выводимое на UI")
+    @Schema(description = "Сообщение с ошибкой")
     private String errorMessage;
 }

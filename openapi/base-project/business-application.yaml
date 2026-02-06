@@ -1,0 +1,298 @@
+openapi: 3.1.0
+info:
+  title: Base Project
+  description: Шаблонный проект для быстрого старта разработки приложения
+  version: 01.000.00
+servers:
+  - url: "{protocol}://{host}:{port}/"
+    description: Адрес приложения
+    variables:
+      protocol:
+        default: http
+      host:
+        default: localhost
+      port:
+        default: "8081"
+tags:
+  - name: SettingsController
+    description: Точка доступа к настройкам приложения
+  - name: AuthenticationController
+    description: Точка доступа к аутентификации
+paths:
+  /authentication/registration:
+    post:
+      tags:
+        - AuthenticationController
+      description: Регистрация пользователя
+      operationId: registration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UfsRegistrationRequest"
+        required: true
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UfsAuthenticationResponse"
+  /authentication/password/change:
+    post:
+      tags:
+        - AuthenticationController
+      description: Изменение пароля пользователя
+      operationId: changePassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UfsChangePasswordRequest"
+        required: true
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: Success
+  /authentication/logout:
+    post:
+      tags:
+        - AuthenticationController
+      description: Выход пользователя из системы
+      operationId: logout
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: Success
+  /authentication/login:
+    post:
+      tags:
+        - AuthenticationController
+      description: Аутентификация пользователя
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UfsLoginRequest"
+        required: true
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UfsAuthenticationResponse"
+  /authentication/extend:
+    post:
+      tags:
+        - AuthenticationController
+      description: Продление аутентификации при активном сценарии
+      operationId: extend
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: Success
+  /settings/pre-login:
+    get:
+      tags:
+        - SettingsController
+      description: Получение настроек приложения
+      operationId: getPreLoginSettings
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UfsSettingsResponse"
+components:
+  schemas:
+    ErrorData:
+      type: object
+      description: Модель ошибки
+      properties:
+        errorField:
+          type: string
+          description: Наименование системы
+        errorMessage:
+          type: string
+          description: Сообщение с ошибкой
+    ErrorResponse:
+      type: object
+      description: Модель ошибки
+      properties:
+        system:
+          type: string
+          description: Наименование системы
+        code:
+          type: string
+          description: Код ошибки
+        validation:
+          type: array
+          description: Ошибки валидации
+          items:
+            $ref: "#/components/schemas/ErrorData"
+    UfsAuthenticationResponse:
+      type: object
+      description: Модель ответа аутентифицированного пользователя
+      properties:
+        firstName:
+          type: string
+          description: Имя пользователя
+        middleName:
+          type: string
+          description: Отчество пользователя
+    UfsRegistrationRequest:
+      type: object
+      description: Модель запроса с параметрами регистрации пользователя
+      properties:
+        login:
+          type: string
+          description: Логин пользователя (E-mail)
+          example: SomeEmail@mail.ru
+          pattern: "^[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}$"
+        password:
+          type: string
+          format: base64
+          description: Пароль пользователя
+          example: ZXhhbXBsZQ==
+          minLength: 1
+        firstName:
+          type: string
+          description: Имя пользователя
+          minLength: 1
+        lastName:
+          type: string
+          description: Фамилия пользователя
+        middleName:
+          type: string
+          description: Отчество пользователя
+        phoneNumber:
+          type: string
+          description: Телефон пользователя
+          example: "+77777777777"
+          pattern: "^\\+7\\d{10}$"
+      required:
+        - login
+    UfsChangePasswordRequest:
+      type: object
+      description: Модель запроса с параметрами сброса пароля
+      properties:
+        login:
+          type: string
+          description: Логин пользователя (E-mail)
+          example: SomeEmail@mail.ru
+          pattern: "^[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}$"
+        password:
+          type: string
+          format: base64
+          description: Пароль пользователя
+          example: ZXhhbXBsZQ==
+          minLength: 1
+        newPassword:
+          type: string
+          format: base64
+          description: Новый пароль пользователя
+          example: ZXhhbXBsZQ==
+          minLength: 1
+      required:
+        - login
+    UfsLoginRequest:
+      type: object
+      description: Модель запроса с параметрами аутентификации
+      properties:
+        login:
+          type: string
+          description: Логин пользователя (E-mail)
+          example: SomeEmail@mail.ru
+          pattern: "^[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}$"
+        password:
+          type: string
+          format: base64
+          description: Пароль пользователя
+          example: ZXhhbXBsZQ==
+          minLength: 1
+        rememberMe:
+          type: boolean
+          description: Признак 'Запомнить меня'
+      required:
+        - login
+    UfsSettingsResponse:
+      type: object
+      description: Модель ответа с настройками приложения
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+          description: Настройки приложения в пре-логине

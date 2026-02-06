@@ -13,6 +13,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 import ru.dorofeev.application.exception.BaseProjectException;
 import ru.dorofeev.application.exception.model.ErrorResponse;
 import ru.dorofeev.application.exception.model.enums.ErrorType;
+import ru.dorofeev.security.authentication.exception.SecurityException;
 
 import java.util.Collections;
 
@@ -44,6 +45,15 @@ public class RestExceptionHandler extends BaseHandler {
         return ErrorResponse.builder()
                 .system(system)
                 .code(String.valueOf(ex.getErrorType().getCode()))
+                .build();
+    }
+
+    @ExceptionHandler(SecurityException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleException(SecurityException ex) {
+        return ErrorResponse.builder()
+                .system(system)
+                .code(String.valueOf(ex.getType().getCode()))
                 .build();
     }
 

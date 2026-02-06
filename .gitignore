@@ -44,3 +44,6 @@ log/
 
 ### Allure Reports ###
 */allure-results
+
+### Plugin ###
+amplicode.xml

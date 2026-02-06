@@ -1,7 +1,13 @@
 databaseChangeLog:
-    - include:
-        file: 1709303888989_create_common_setting_table.sql
-        relativeToChangelogFile: true
-    - include:
-        file: 1709304025339_create_job_table.sql
-        relativeToChangelogFile: true
+  - include:
+      file: 1709303888989_create_common_setting_table.sql
+      relativeToChangelogFile: true
+  - include:
+      file: 1709304025339_create_job_table.sql
+      relativeToChangelogFile: true
+  - include:
+      file: 1765975903902_create_user_info_table.sql
+      relativeToChangelogFile: true
+  - include:
+      file: 1766117323828_create_user_password_history_table.sql
+      relativeToChangelogFile: true

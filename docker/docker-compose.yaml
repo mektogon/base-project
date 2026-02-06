@@ -13,6 +13,19 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USR}
       - POSTGRES_PASSWORD=${POSTGRES_PWD}
+  redis:
+    image: redis:8.4.0-alpine
+    restart: on-failure
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./volumes/redis/data:/data
+    env_file:
+      - .env
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    command: >
+      --notify-keyspace-events Egx
   business-application:
     build:
       context: ..
@@ -25,7 +38,9 @@ services:
       - ./volumes/application/log:/log
     depends_on:
       postgres:
-        condition: service_started
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     env_file:
       - .env
     environment:
@@ -33,35 +48,3 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USR=${POSTGRES_USR}
       - POSTGRES_PWD=${POSTGRES_PWD}
-  nginx:
-    container_name: backend-nginx-1.25.3
-    image: nginx:1.25.3
-    ports:
-      - "8080:8080"
-    restart: on-failure
-    volumes:
-      - ./configuration/nginx:/etc/nginx/conf.d
-  prometheus:
-    container_name: prometheus
-    image: prom/prometheus
-    ports:
-      - "9090:9090"
-    restart: on-failure
-    volumes:
-      - ./volumes/prometheus:/prometheus
-      - ./configuration/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
-  grafana:
-    container_name: grafana
-    image: grafana/grafana
-    ports:
-      - "3000:3000"
-    restart: on-failure
-    volumes:
-      - ./volumes/grafana:/var/lib/grafana
-      - ./configuration/grafana/dashboards:/etc/grafana/provisioning/dashboards
-      - ./configuration/grafana/datasources:/etc/grafana/provisioning/datasources
-    env_file:
-      - .env
-    environment:
-      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USR}
-      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PWD}

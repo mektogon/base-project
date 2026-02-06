@@ -31,5 +31,5 @@ public class BasicEntitySystemFields {
 
     @Version
     @Column(name = "version", nullable = false)
-    private Long version;
+    private Integer version;
 }

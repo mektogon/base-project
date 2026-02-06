@@ -12,17 +12,17 @@ public enum ErrorType {
     /**
      * Неизвестный тип ошибки.
      */
-    OTHER_EXCEPTION("1000"),
+    OTHER_EXCEPTION("BPB1000"),
 
     /**
      * Ошибка любой интеграции.
      */
-    INTEGRATION_ERROR("2000"),
+    INTEGRATION_ERROR("BPB2000"),
 
     /**
      * Ошибка валидации.
      */
-    VALIDATION_ERROR("3000");
+    VALIDATION_ERROR("BPB3000");
 
     @Schema(description = "Код ошибки")
     private final String code;

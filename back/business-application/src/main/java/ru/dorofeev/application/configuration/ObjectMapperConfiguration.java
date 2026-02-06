@@ -9,12 +9,13 @@ import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import ru.dorofeev.security.introspector.CommonAnnotationIntrospector;
 
 @Configuration
 public class ObjectMapperConfiguration {
 
     @Bean
-    public ObjectMapper getObjectMapper() {
+    public ObjectMapper getObjectMapper(CommonAnnotationIntrospector commonAnnotationIntrospector) {
         return new ObjectMapper()
                 .enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES)
                 .enable(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL)
@@ -22,6 +23,7 @@ public class ObjectMapperConfiguration {
                 .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 .setSerializationInclusion(JsonInclude.Include.NON_NULL)
                 .setDateFormat(new StdDateFormat().withColonInTimeZone(true))
+                .setAnnotationIntrospector(commonAnnotationIntrospector)
                 .registerModule(new JavaTimeModule());
     }
 }
