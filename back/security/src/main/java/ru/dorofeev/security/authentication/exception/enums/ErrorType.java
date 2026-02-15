@@ -92,6 +92,35 @@ public enum ErrorType {
 
     //endregion
 
+    //region Ошибки с шифрованием/дешифрованием.
+
+    /**
+     * Не удалось создать {@link javax.crypto.Cipher}.
+     */
+    CREATE_CIPHER_ERROR("S4000"),
+
+    /**
+     * Не удалось получить секретный ключ.
+     */
+    SECRET_KEY_IS_EMPTY("S4001"),
+
+    /**
+     * Не удалось выполнить дешифрование.
+     */
+    DECRYPT_ERROR("S4002"),
+
+    /**
+     * Не удалось выполнить шифрование.
+     */
+    ENCRYPT_ERROR("S4003"),
+
+    /**
+     * Не удалось получить подходящий конвертер.
+     */
+    CRYPT_CONVERTER_NOT_FOUND("S4004"),
+
+    //endregion
+
     ;
 
     /**

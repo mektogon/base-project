@@ -67,7 +67,7 @@ gradlew resolveAndLockAll --write-locks
 . Выполнить аутентификацию с помощью endpoint POST /authentication/login, подложив в header "X-XSRF-TOKEN" шифрованное значение, полученное на п.1
 . После успешной аутентификации "XSRF-TOKEN" будет изменен, для дальнейших вызовов endpoint-ов, необходимо будет выполнить XOR-шифрование нового токена и работать с ним.
 
-WARNING: Выполнить XOR-шифрование можно через "ru.dorofeev.unit.XOREncryptedTest"
+WARNING: Выполнить XOR-шифрование можно через "XOREncryptedTest"
 
 WARNING: Если вызов со стороны frontend, то XOR-операция токена должна выполняться перед каждым вызовом.
 

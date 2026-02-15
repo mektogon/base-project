@@ -2,6 +2,7 @@ package ru.dorofeev.security.cookie.strategy;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import ru.dorofeev.security.cookie.CookieProperties;
@@ -9,15 +10,11 @@ import ru.dorofeev.security.cookie.utils.CookieUtils;
 import ru.dorofeev.security.session.SessionProperties;
 
 @Component
+@RequiredArgsConstructor
 public class SessionCookieRefreshStrategy implements CookieRefreshStrategy {
 
     private final CookieProperties.SessionCookieProperties sessionCookieProperties;
     private final SessionProperties.RememberMeProperties rememberMeProperties;
-
-    public SessionCookieRefreshStrategy(CookieProperties.SessionCookieProperties sessionCookieProperties, SessionProperties.RememberMeProperties rememberMeProperties) {
-        this.sessionCookieProperties = sessionCookieProperties;
-        this.rememberMeProperties = rememberMeProperties;
-    }
 
     @Override
     public boolean support(@NotNull String cookieName) {

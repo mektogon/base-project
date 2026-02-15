@@ -1,32 +1,33 @@
 package ru.dorofeev.security.session.section;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.dorofeev.security.session.utils.SessionUtils;
+import ru.dorofeev.security.introspector.encrypted.provider.CryptoProvider;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class CryptSection implements AbstractSection<CryptSection.Attribute> {
-
-    private static final String ALGORITHM_VALUE = "AES/GCM/NoPadding";
+@RequiredArgsConstructor
+public class CryptoSection implements AbstractSection<CryptoSection.Attribute> {
 
     @Override
     public String getName() {
-        return "CRYPT";
+        return "CRYPTO";
     }
 
     @Override
     public String getDescription() {
-        return "Информация о шифровании";
+        return "Криптографическая информация";
     }
 
     @Override
     public Map<String, Object> getAttributes() {
         Map<String, Object> attributes = new HashMap<>();
 
-        attributes.put(Attribute.SECRET_KEY.name(), SessionUtils.getSecretKey());
-        attributes.put(Attribute.ALGORITHM.name(), ALGORITHM_VALUE);
+        attributes.put(Attribute.SECRET_KEY.name(), CryptoProvider.generate32ByteSecretKey());
+        attributes.put(Attribute.ALGORITHM.name(), CryptoProvider.getAlgorithm());
+        attributes.put(Attribute.TRANSFORMATION.name(), CryptoProvider.getAlgorithmTransformation());
 
         return attributes;
     }
@@ -48,6 +49,12 @@ public class CryptSection implements AbstractSection<CryptSection.Attribute> {
          * Алгоритм шифрования. <br/>
          * Тип: {@link String}.
          */
-        ALGORITHM;
+        ALGORITHM,
+
+        /**
+         * Трансформация шифрования.
+         * Тип: {@link String}.
+         */
+        TRANSFORMATION;
     }
 }

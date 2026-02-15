@@ -6,8 +6,8 @@ server:
 
 logging:
   pattern:
-    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [%mdc] %msg%n"
-    file: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [%mdc] %msg%n"
+    console: "%d{HH:mm:ss.SSS} [%thread] [%-5level] %logger{36} - [%mdc] %msg%n"
+    file: "%d{HH:mm:ss.SSS} [%thread] [%-5level] %logger{36} - [%mdc] %msg%n"
   file:
     path: ./log
     name: ${logging.file.path}/application.log
