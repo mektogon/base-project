@@ -5,11 +5,8 @@ import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.springframework.security.crypto.keygen.BytesKeyGenerator;
-import org.springframework.security.crypto.keygen.KeyGenerators;
 import ru.dorofeev.security.session.enums.UserChannel;
 
-import java.util.Base64;
 import java.util.Objects;
 
 @UtilityClass
@@ -46,15 +43,5 @@ public class SessionUtils {
      */
     public static @Nullable String getIp(HttpServletRequest request) {
         return request.getRemoteAddr();
-    }
-
-    /**
-     * Метод получения случайного набора символов для шифрования/дешифрования размерностью 256 бит (32 байта). <br/>
-     * Пример: BnVmYiJkZWZnN2g4aTprbG0xMjN0dXZ3eHk5MDg3NjU0QkNERUY=
-     */
-    public static @NotNull String getSecretKey() {
-        BytesKeyGenerator keyGenerator = KeyGenerators.secureRandom(32);
-        byte[] key = keyGenerator.generateKey();
-        return Base64.getEncoder().encodeToString(key);
     }
 }
