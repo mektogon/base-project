@@ -8,14 +8,14 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.session:spring-session-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-web")
+}
 
-    tasks {
-        jar {
-            enabled = true //Enable generation jar-plain.
-        }
+tasks {
+    jar {
+        enabled = true //Enable generation jar-plain.
+    }
 
-        bootJar {
-            enabled = false //Disable generate executable jar.
-        }
+    bootJar {
+        enabled = false //Disable generate executable jar.
     }
 }
