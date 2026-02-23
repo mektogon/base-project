@@ -11,13 +11,15 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
-import ru.dorofeev.SecurityProperties;
+import ru.dorofeev.security.SecurityProperties;
 import ru.dorofeev.security.authentication.utils.AuthenticationUtils;
 import ru.dorofeev.security.cookie.strategy.CookieRefreshStrategy;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Фильтр обновления параметра "MaxAge" {@link Cookie}.
@@ -26,10 +28,10 @@ public final class CookieRefreshFilter extends OncePerRequestFilter {
 
     private final List<CookieRefreshStrategy> refreshStrategies;
 
-    private final List<String> whiteListNotAuthentification;
-    private final List<String> cookieCandidatesToRefresh;
+    private final Set<String> cookieCandidatesToRefresh;
     private final String rememberMeAttributeName;
     private final AntPathMatcher pathMatcher;
+    private final Set<String> excludePaths;
 
     public CookieRefreshFilter(
             List<CookieRefreshStrategy> refreshStrategies,
@@ -39,8 +41,11 @@ public final class CookieRefreshFilter extends OncePerRequestFilter {
         this.pathMatcher = new AntPathMatcher();
 
         this.cookieCandidatesToRefresh = securityProperties.getCookie().getCookieRefreshFilter().getCandidateToRefresh();
-        this.whiteListNotAuthentification = securityProperties.getEndpoint().getWhiteList();
         this.rememberMeAttributeName = securityProperties.getSession().getRememberMe().getAttributeName();
+
+        this.excludePaths = new HashSet<>();
+        excludePaths.addAll(securityProperties.getCookie().getCookieRefreshFilter().getExcludePaths());
+        excludePaths.addAll(securityProperties.getEndpoint().getWhiteList());
     }
 
     @Override
@@ -58,7 +63,7 @@ public final class CookieRefreshFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String contextPath = request.getServletPath();
-        return whiteListNotAuthentification
+        return excludePaths
                 .stream()
                 .anyMatch(pattern -> pathMatcher.match(pattern, contextPath));
     }

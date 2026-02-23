@@ -81,3 +81,11 @@ http-client:
     read: 30000
     write: 30000
     connection: 5000
+
+security:
+  endpoint:
+    white-list:
+      - "/authentication/login"
+      - "/authentication/registration"
+      - "/authentication/password/reset"
+      - "/settings/pre-login"

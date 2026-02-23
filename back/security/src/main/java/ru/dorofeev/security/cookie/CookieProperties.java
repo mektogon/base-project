@@ -7,10 +7,11 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.annotation.Validated;
+import ru.dorofeev.security.SecurityProperties;
 import ru.dorofeev.security.cookie.filter.CookieRefreshFilter;
 
 import java.time.Duration;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Базовые параметры для cookie.
@@ -23,7 +24,7 @@ import java.util.List;
 public class CookieProperties {
 
     /**
-     * Параметры CSRF-cookie.
+     * Настройки CSRF-токена cookie.
      */
     @NotNull
     private CsrfCookieProperties csrf;
@@ -42,10 +43,18 @@ public class CookieProperties {
     public static class CookieRefreshFilterProperties {
 
         /**
+         * Список endpoint-ов, которые следует исключить из обработки фильтром. <br/>
+         * WARNING: Помимо явного указания исключаются из проверки endpoint-ы из WL.
+         */
+        private Set<String> excludePaths;
+
+        /**
          * Список наименований cookie, которые подлежат обновлению.
+         * Формируется путем сборки из candidateToRefresh
+         * и автоматического добавления значений из {@link SecurityProperties.EndpointProperties#getWhiteList()}.
          */
         @NotNull
-        private List<String> candidateToRefresh;
+        private Set<String> candidateToRefresh;
     }
 
     @Getter

@@ -1,0 +1,360 @@
+{
+  "groups": [
+    {
+      "name": "security",
+      "type": "ru.dorofeev.security.SecurityProperties",
+      "description": "Пользовательские настройки модуля безопасности.",
+      "sourceType": "ru.dorofeev.security.SecurityProperties"
+    },
+    {
+      "name": "security.password",
+      "type": "ru.dorofeev.security.SecurityProperties.PasswordProperties",
+      "description": "Настройки политики паролей.",
+      "sourceType": "ru.dorofeev.security.SecurityProperties.PasswordProperties"
+    },
+    {
+      "name": "security.password.history",
+      "type": "ru.dorofeev.security.SecurityProperties.PasswordProperties.PasswordHistoryProperties",
+      "description": "Параметры для истории паролей.",
+      "sourceType": "ru.dorofeev.security.SecurityProperties.PasswordProperties.PasswordHistoryProperties"
+    },
+    {
+      "name": "security.endpoint",
+      "type": "ru.dorofeev.security.SecurityProperties.PasswordProperties.EndpointProperties",
+      "description": "Параметры endpoint-ов.",
+      "sourceType": "ru.dorofeev.security.SecurityProperties.PasswordProperties.EndpointProperties"
+    },
+    {
+      "name": "security.cors",
+      "type": "ru.dorofeev.security.cors.CorsProperties",
+      "description": "Параметры для CORS (Cross-Origin Resource Sharing).",
+      "sourceType": "ru.dorofeev.security.cors.CorsProperties"
+    },
+    {
+      "name": "security.session",
+      "type": "ru.dorofeev.security.session.SessionProperties",
+      "description": "Параметры сессии.",
+      "sourceType": "ru.dorofeev.security.session.SessionProperties"
+    },
+    {
+      "name": "security.session.limit-per-channel",
+      "type": "ru.dorofeev.security.session.SessionProperties.LimitPerChannelProperties",
+      "description": "Параметры настройки предела одновременных сеансов по каналам.",
+      "sourceType": "ru.dorofeev.security.session.SessionProperties.LimitPerChannelProperties"
+    },
+    {
+      "name": "security.session.remember-me",
+      "type": "ru.dorofeev.security.session.SessionProperties.RememberMeProperties",
+      "description": "Параметры для настройки функционала \"Запомнить меня\".",
+      "sourceType": "ru.dorofeev.security.session.SessionProperties.RememberMeProperties"
+    },
+    {
+      "name": "security.cookie",
+      "type": "ru.dorofeev.security.cookie.CookieProperties",
+      "description": "Общие настройки cookie.",
+      "sourceType": "ru.dorofeev.security.cookie.CookieProperties"
+    },
+    {
+      "name": "security.cookie.csrf",
+      "type": "ru.dorofeev.security.cookie.CookieProperties.CsrfCookieProperties",
+      "description": "Настройки CSRF-токена cookie.",
+      "sourceType": "ru.dorofeev.security.cookie.CookieProperties.CsrfCookieProperties"
+    },
+    {
+      "name": "security.cookie.cookie-refresh-filter",
+      "type": "ru.dorofeev.security.cookie.CookieProperties.CookieRefreshFilterProperties",
+      "description": "Параметры настройки фильтра обновления cookies.",
+      "sourceType": "ru.dorofeev.security.cookie.CookieProperties.CookieRefreshFilterProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "security.password.count-days-password-expire",
+      "type": "java.lang.Integer",
+      "description": "Длительность пароля в днях до его истечения.",
+      "sourceType": "ru.dorofeev.security.SecurityProperties.PasswordProperties"
+    },
+    {
+      "name": "security.password.strength",
+      "type": "java.lang.Integer",
+      "description": "Количество итераций хеширования пароля. Минимальное значение: 12, рекомендуется: 12-16.",
+      "sourceType": "ru.dorofeev.security.SecurityProperties.PasswordProperties",
+      "defaultValue": 12
+    },
+    {
+      "name": "security.password.pepper",
+      "type": "java.lang.String",
+      "description": "\"Перец\", применяемый при хешировании пароля.",
+      "sourceType": "ru.dorofeev.security.SecurityProperties.PasswordProperties"
+    },
+    {
+      "name": "security.password.algorithm",
+      "type": "java.lang.String",
+      "description": "Алгоритм шифрования.",
+      "sourceType": "ru.dorofeev.security.SecurityProperties.PasswordProperties"
+    },
+    {
+      "name": "security.password.history.depth",
+      "type": "java.lang.Integer",
+      "description": "Количество паролей, хранимых в истории.",
+      "sourceType": "ru.dorofeev.security.SecurityProperties.PasswordProperties.PasswordHistoryProperties"
+    },
+    {
+      "name": "security.endpoint.white-list",
+      "type": "java.util.Set<java.lang.String>",
+      "description": "Список endpoint-ов доступных без аутентификации.",
+      "sourceType": "ru.dorofeev.security.SecurityProperties.PasswordProperties.EndpointProperties"
+    },
+    {
+      "name": "security.cors.allowed-origins",
+      "type": "java.util.Set<java.lang.String>",
+      "description": "Список разрешенных источников.",
+      "sourceType": "ru.dorofeev.security.cors.CorsProperties"
+    },
+    {
+      "name": "security.cors.allowed-methods",
+      "type": "java.util.Set<java.lang.String>",
+      "description": "Список разрешенных HTTP-методов.",
+      "sourceType": "ru.dorofeev.security.cors.CorsProperties"
+    },
+    {
+      "name": "security.cors.allowed-headers",
+      "type": "java.util.Set<java.lang.String>",
+      "description": "Список разрешенных заголовков.",
+      "sourceType": "ru.dorofeev.security.cors.CorsProperties"
+    },
+    {
+      "name": "security.session.limit-per-channel.attribute-name",
+      "type": "java.lang.String",
+      "description": "Наименование атрибута сессии, используемого для хранения канала HTTP-запроса.",
+      "sourceType": "ru.dorofeev.security.session.SessionProperties.LimitPerChannelProperties",
+      "defaultValue": "RQ_CHANNEL"
+    },
+    {
+      "name": "security.session.limit-per-channel.limit-map",
+      "type": "java.util.Map<java.lang.String, java.lang.Integer>",
+      "description": "Карта соответствий канала и количества сессий. Ключ - идентификатор канала, значение - максимальное количество сессий.",
+      "sourceType": "ru.dorofeev.security.session.SessionProperties.LimitPerChannelProperties"
+    },
+    {
+      "name": "security.session.remember-me.attribute-name",
+      "type": "java.lang.String",
+      "description": "Наименование атрибута сессии, используемого для хранения признака 'Запомни меня'.",
+      "sourceType": "ru.dorofeev.security.session.SessionProperties.RememberMeProperties",
+      "defaultValue": "RQ_REMEMBER_ME"
+    },
+    {
+      "name": "security.session.remember-me.max-age",
+      "type": "java.time.Duration",
+      "description": "Время жизни сессии при включенном флаге remember-me. Формат: 30d (дни), 24h (часы), 60m (минуты), 3600s (секунды).",
+      "sourceType": "ru.dorofeev.security.session.SessionProperties.RememberMeProperties",
+      "defaultValue": "3d"
+    },
+    {
+      "name": "security.cookie.csrf.name",
+      "type": "java.lang.String",
+      "description": "Наименование cookie HTTP-запроса, в которой приходит CSRF-токен.",
+      "sourceType": "ru.dorofeev.security.cookie.CookieProperties.CsrfCookieProperties",
+      "defaultValue": "XSRF-TOKEN"
+    },
+    {
+      "name": "security.cookie.csrf.max-age",
+      "type": "java.time.Duration",
+      "description": "Длительность жизни cookie",
+      "sourceType": "ru.dorofeev.security.cookie.CookieProperties.CsrfCookieProperties"
+    },
+    {
+      "name": "security.cookie.csrf.path",
+      "type": "java.lang.String",
+      "description": "Путь присваивания cookie.",
+      "sourceType": "ru.dorofeev.security.cookie.CookieProperties.CsrfCookieProperties",
+      "defaultValue": "/"
+    },
+    {
+      "name": "security.cookie.csrf.http-only",
+      "type": "java.lang.Boolean",
+      "description": "Доступ к cookie из JavaScript на клиентской стороне.",
+      "sourceType": "ru.dorofeev.security.cookie.CookieProperties.CsrfCookieProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "security.cookie.csrf.secure",
+      "type": "java.lang.Boolean",
+      "description": "Передача cookie по HTTPS.",
+      "sourceType": "ru.dorofeev.security.cookie.CookieProperties.CsrfCookieProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "security.cookie.csrf.same-site",
+      "type": "java.lang.String",
+      "description": "Передача cookie с cross-site запросами.",
+      "sourceType": "ru.dorofeev.security.cookie.CookieProperties.CsrfCookieProperties",
+      "defaultValue": "strict"
+    },
+    {
+      "name": "security.cookie.cookie-refresh-filter.exclude-paths",
+      "type": "java.util.Set<java.lang.String>",
+      "description": "Список endpoint-ов, которые следует исключить из обработки фильтром.",
+      "sourceType": "ru.dorofeev.security.cookie.CookieProperties.CookieRefreshFilterProperties"
+    },
+    {
+      "name": "security.cookie.cookie-refresh-filter.candidate-to-refresh",
+      "type": "java.util.Set<java.lang.String>",
+      "description": "Список наименований cookie, которые подлежат обновлению.",
+      "sourceType": "ru.dorofeev.security.cookie.CookieProperties.CookieRefreshFilterProperties"
+    }
+  ],
+  "hints": [
+    {
+      "name": "security.password.countDaysPasswordExpire",
+      "values": [
+        {
+          "value": 365,
+          "description": "1 год"
+        },
+        {
+          "value": 182,
+          "description": "± полгода"
+        }
+      ]
+    },
+    {
+      "name": "security.password.algorithm",
+      "values": [
+        {
+          "value": "BCRYPT",
+          "description": "BCRYPT — адаптивная криптографическая хеш-функция формирования ключа. Длина 72 байта."
+        }
+      ]
+    },
+    {
+      "name": "security.password.strength",
+      "values": [
+        {
+          "value": 12,
+          "description": "Минимальное значение (2^12 = 4096 итераций)"
+        },
+        {
+          "value": 14,
+          "description": "Среднее значение (2^14 = 16384 итераций)"
+        },
+        {
+          "value": 16,
+          "description": "Высокое значение (2^16 = 65536 итераций)"
+        }
+      ]
+    },
+    {
+      "name": "security.password.history.depth",
+      "values": [
+        {
+          "value": 5,
+          "description": "Минимальное значение"
+        }
+      ],
+      "providers": [
+        {
+          "name": "integer-range",
+          "parameters": {
+            "min": 5,
+            "max": 10
+          }
+        }
+      ]
+    },
+    {
+      "name": "security.cors.allowed-methods",
+      "values": [
+        {
+          "value": "GET",
+          "description": "Запрос на получение ресурса (безопасный, идемпотентный)"
+        },
+        {
+          "value": "POST",
+          "description": "Создание нового ресурса (не идемпотентный)"
+        },
+        {
+          "value": "PUT",
+          "description": "Полное обновление ресурса (идемпотентный)"
+        },
+        {
+          "value": "PATCH",
+          "description": "Частичное обновление ресурса"
+        },
+        {
+          "value": "DELETE",
+          "description": "Удаление ресурса (идемпотентный)"
+        },
+        {
+          "value": "HEAD",
+          "description": "Получение заголовков ресурса (без тела ответа)"
+        },
+        {
+          "value": "OPTIONS",
+          "description": "Получение информации о поддерживаемых методах (preflight запрос)"
+        },
+        {
+          "value": "TRACE",
+          "description": "Диагностический метод (обычно отключен в production)"
+        },
+        {
+          "value": "CONNECT",
+          "description": "Установка туннеля для прокси (используется для HTTPS)"
+        },
+        {
+          "value": "*",
+          "description": "Разрешить все HTTP методы (НЕ рекомендуется в production)"
+        }
+      ]
+    },
+    {
+      "name": "security.cookie.csrf.same-site",
+      "values": [
+        {
+          "value": "LAX",
+          "description": "Cookie передается при навигации на сайт (рекомендуется, баланс безопасности и удобства)"
+        },
+        {
+          "value": "STRICT",
+          "description": "Cookie не передается при кросс-сайтовых запросах (максимальная безопасность)"
+        },
+        {
+          "value": "NONE",
+          "description": "Cookie передается при всех запросах (требуется Secure=true, для кросс-доменных запросов)"
+        }
+      ]
+    },
+    {
+      "name": "security.session.limit-per-channel.limit-map",
+      "values": [
+        {
+          "value": "WEB",
+          "description": "Веб-браузер"
+        },
+        {
+          "value": "MOBILE",
+          "description": "Мобильное устройство (телефон/планшет)"
+        }
+      ],
+      "providers": [
+        {
+          "name": "map-key",
+          "parameters": {
+            "key": {
+              "name": "handle-as",
+              "parameters": {
+                "target": "java.lang.String"
+              }
+            },
+            "value": {
+              "name": "integer-range",
+              "parameters": {
+                "min": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

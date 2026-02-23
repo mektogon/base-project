@@ -48,7 +48,7 @@ public class SessionProperties {
         private String attributeName;
 
         /**
-         * Карта состояний
+         * Карта соответствий канала и количества сессий. Ключ - идентификатор канала, значение - максимальное количество сессий.
          */
         @NotEmpty
         private Map<String, Integer> limitMap;

@@ -9,7 +9,7 @@ server:
     session:
       cookie:
         max-age: ${spring.session.timeout}
-        path: "/kz/base-project/rest"
+        path: "/base-project/rest"
         name: "AS-SESSION"
         http-only: true
         secure: true
@@ -43,7 +43,6 @@ security:
     algorithm: "BCRYPT"
     history:
       depth: 5
-
   cors:
     allowed-origins:
       - "https://some-prod-host.ru"

@@ -1,4 +1,4 @@
-package ru.dorofeev;
+package ru.dorofeev.security;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -25,7 +25,7 @@ import java.util.List;
 public class SecurityProperties {
 
     /**
-     * Параметры пароля.
+     * Настройки политики паролей.
      */
     @NotNull
     private PasswordProperties password;
@@ -37,7 +37,7 @@ public class SecurityProperties {
     private EndpointProperties endpoint;
 
     /**
-     * Параметры для CORS.
+     * Параметры для CORS (Cross-Origin Resource Sharing).
      */
     @NotNull
     private CorsProperties cors;
@@ -49,7 +49,7 @@ public class SecurityProperties {
     private SessionProperties session;
 
     /**
-     * Параметры
+     * Общие настройки cookie.
      */
     @NotNull
     private CookieProperties cookie;

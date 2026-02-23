@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.dorofeev.database.entity.UserPasswordHistory;
 import ru.dorofeev.database.repository.UserInfoRepository;
 import ru.dorofeev.database.repository.UserPasswordHistoryRepository;
-import ru.dorofeev.SecurityProperties;
+import ru.dorofeev.security.SecurityProperties;
 import ru.dorofeev.security.configuration.PepperedBCryptPasswordEncoder;
 
 import java.util.UUID;

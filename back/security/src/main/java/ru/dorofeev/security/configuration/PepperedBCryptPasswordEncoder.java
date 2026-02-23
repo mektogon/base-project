@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import ru.dorofeev.SecurityProperties;
+import ru.dorofeev.security.SecurityProperties;
 
 @Component
 public class PepperedBCryptPasswordEncoder implements PasswordEncoder {

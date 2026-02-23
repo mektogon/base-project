@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Параметры для CORS.
@@ -21,15 +21,15 @@ public class CorsProperties {
     /**
      * Список разрешенных источников.
      */
-    private List<String> allowedOrigins;
+    private Set<String> allowedOrigins;
 
     /**
      * Список разрешенных HTTP-методов.
      */
-    private List<String> allowedMethods;
+    private Set<String> allowedMethods;
 
     /**
      * Список разрешенных заголовков.
      */
-    private List<String> allowedHeaders;
+    private Set<String> allowedHeaders;
 }

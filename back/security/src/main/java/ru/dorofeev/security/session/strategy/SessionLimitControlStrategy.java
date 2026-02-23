@@ -8,7 +8,7 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.Session;
 import org.springframework.stereotype.Component;
-import ru.dorofeev.SecurityProperties;
+import ru.dorofeev.security.SecurityProperties;
 import ru.dorofeev.security.session.utils.SessionUtils;
 
 import java.util.Comparator;

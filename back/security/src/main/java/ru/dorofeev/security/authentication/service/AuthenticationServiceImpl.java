@@ -8,7 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import ru.dorofeev.SecurityProperties;
+import ru.dorofeev.security.SecurityProperties;
 import ru.dorofeev.database.entity.UserInfoEntity;
 import ru.dorofeev.database.repository.UserInfoRepository;
 import ru.dorofeev.security.authentication.exception.SecurityException;

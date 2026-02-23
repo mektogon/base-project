@@ -14,7 +14,6 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
@@ -23,7 +22,7 @@ import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import ru.dorofeev.SecurityProperties;
+import ru.dorofeev.security.SecurityProperties;
 import ru.dorofeev.database.repository.UserInfoRepository;
 import ru.dorofeev.security.authentication.exception.SecurityException;
 import ru.dorofeev.security.authentication.exception.enums.ErrorType;
@@ -33,7 +32,9 @@ import ru.dorofeev.security.cookie.filter.CookieRefreshFilter;
 import ru.dorofeev.security.cookie.strategy.CookieRefreshStrategy;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Configuration
@@ -84,9 +85,9 @@ public class SecurityConfiguration {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-        List<String> allowedMethods = securityProperties.getCors().getAllowedMethods();
-        List<String> allowedOrigins = securityProperties.getCors().getAllowedOrigins();
-        List<String> allowedHeaders = securityProperties.getCors().getAllowedHeaders();
+        Set<String> allowedMethods = securityProperties.getCors().getAllowedMethods();
+        Set<String> allowedOrigins = securityProperties.getCors().getAllowedOrigins();
+        Set<String> allowedHeaders = securityProperties.getCors().getAllowedHeaders();
         log.info(
                 """
                         \n
@@ -103,9 +104,9 @@ public class SecurityConfiguration {
         );
 
         final CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(allowedOrigins);
-        configuration.setAllowedMethods(allowedMethods);
-        configuration.setAllowedHeaders(allowedHeaders);
+        configuration.setAllowedOrigins(new ArrayList<>(allowedOrigins));
+        configuration.setAllowedMethods(new ArrayList<>(allowedOrigins));
+        configuration.setAllowedHeaders(new ArrayList<>(allowedOrigins));
         configuration.setAllowCredentials(true);
 
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
