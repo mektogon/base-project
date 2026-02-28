@@ -53,7 +53,7 @@ security:
       - "DELETE"
       - "OPTIONS"
       - "HEAD"
-    allowed-headers: { }
+    allowed-headers: [ ]
   session:
     limit-per-channel:
       attribute-name: "RQ_CHANNEL"

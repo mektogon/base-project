@@ -1,5 +1,6 @@
 package ru.dorofeev.security.cors;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -21,15 +22,18 @@ public class CorsProperties {
     /**
      * Список разрешенных источников.
      */
+    @NotNull
     private Set<String> allowedOrigins;
 
     /**
      * Список разрешенных HTTP-методов.
      */
+    @NotNull
     private Set<String> allowedMethods;
 
     /**
      * Список разрешенных заголовков.
      */
+    @NotNull
     private Set<String> allowedHeaders;
 }
