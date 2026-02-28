@@ -69,6 +69,12 @@
   ],
   "properties": [
     {
+      "name": "security.mode",
+      "type": "java.lang.String",
+      "description": "Режим работы модуля безопасности",
+      "sourceType": "ru.dorofeev.security.SecurityProperties"
+    },
+    {
       "name": "security.password.count-days-password-expire",
       "type": "java.lang.Integer",
       "description": "Длительность пароля в днях до его истечения.",
@@ -205,6 +211,19 @@
     }
   ],
   "hints": [
+    {
+      "name": "security.mode",
+      "values": [
+        {
+          "value": "PROM",
+          "description": "Промышленный режим. Полная конфигурация аутентификации."
+        },
+        {
+          "value": "LOCAL",
+          "description": "Локальный режим. Все запросы проходят без аутентификации."
+        }
+      ]
+    },
     {
       "name": "security.password.countDaysPasswordExpire",
       "values": [

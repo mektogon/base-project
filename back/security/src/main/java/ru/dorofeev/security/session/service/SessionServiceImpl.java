@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.Session;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,6 @@ import static ru.dorofeev.security.session.section.AbstractSection.SECTION_SESSI
 @RequiredArgsConstructor
 public class SessionServiceImpl implements SessionService {
 
-    private static final String SPRING_SECURITY_CONTEXT_VALUE = "SPRING_SECURITY_CONTEXT";
     private static final String SECTION_NAMES_ATTRIBUTE_VALUE = "SECTION_NAMES";
     private static final boolean CREATE_NEW_SESSION_IF_NOT_EXIST = true;
 
@@ -136,7 +136,10 @@ public class SessionServiceImpl implements SessionService {
         }
 
         HttpSession newSession = currentRequest.getSession(CREATE_NEW_SESSION_IF_NOT_EXIST);
-        newSession.setAttribute(SPRING_SECURITY_CONTEXT_VALUE, SecurityContextHolder.getContext());
+        newSession.setAttribute(
+                HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+                SecurityContextHolder.getContext()
+        );
 
         List<String> allSectionNames = new ArrayList<>();
         @SuppressWarnings("rawtypes")

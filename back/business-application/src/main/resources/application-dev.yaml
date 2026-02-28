@@ -22,6 +22,7 @@ management:
       show-details: always
 
 security:
+  mode: LOCAL
   endpoint:
     white-list:
       - "/actuator/**"

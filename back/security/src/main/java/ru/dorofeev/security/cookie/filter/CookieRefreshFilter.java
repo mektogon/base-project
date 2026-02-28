@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.BooleanUtils;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
@@ -24,6 +25,7 @@ import java.util.Set;
 /**
  * Фильтр обновления параметра "MaxAge" {@link Cookie}.
  */
+@Component
 public final class CookieRefreshFilter extends OncePerRequestFilter {
 
     private final List<CookieRefreshStrategy> refreshStrategies;

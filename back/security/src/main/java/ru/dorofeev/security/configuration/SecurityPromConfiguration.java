@@ -3,9 +3,7 @@ package ru.dorofeev.security.configuration;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,7 +11,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
@@ -22,14 +19,12 @@ import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import ru.dorofeev.security.SecurityProperties;
 import ru.dorofeev.database.repository.UserInfoRepository;
+import ru.dorofeev.security.SecurityProperties;
 import ru.dorofeev.security.authentication.exception.SecurityException;
 import ru.dorofeev.security.authentication.exception.enums.ErrorType;
 import ru.dorofeev.security.authentication.model.SecurityUserDetails;
 import ru.dorofeev.security.cookie.CookieProperties;
-import ru.dorofeev.security.cookie.filter.CookieRefreshFilter;
-import ru.dorofeev.security.cookie.strategy.CookieRefreshStrategy;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,10 +32,8 @@ import java.util.List;
 import java.util.Set;
 
 @Slf4j
-@Configuration
-@EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfiguration {
+public class SecurityPromConfiguration {
 
     private final SecurityProperties securityProperties;
 
@@ -53,6 +46,7 @@ public class SecurityConfiguration {
     ) throws Exception {
         List<String> whiteList = securityProperties.getEndpoint().getWhiteList();
         log.info("""
+                        \n
                         |===============================================|
                         [SECURITY-FILTER] Инициализация фильтра с WL: {}
                         |===============================================|
@@ -117,8 +111,8 @@ public class SecurityConfiguration {
 
     @Bean
     public UserDetailsService userDetailsService(UserInfoRepository userInfoRepository) {
-        return username -> new SecurityUserDetails(
-                userInfoRepository.findByEmail(username)
+        return email -> new SecurityUserDetails(
+                userInfoRepository.findByEmail(email)
                         .orElseThrow(() -> new SecurityException(ErrorType.USER_NOT_FOUND))
         );
     }
@@ -134,7 +128,6 @@ public class SecurityConfiguration {
         provider.setPasswordEncoder(passwordEncoder);
         return provider;
     }
-
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
@@ -155,15 +148,6 @@ public class SecurityConfiguration {
             customizer.path(cookieProperties.getPath());
         });
         return repository;
-    }
-
-    @Bean
-    public FilterRegistrationBean<CookieRefreshFilter> cookieRefreshFilter(
-            List<CookieRefreshStrategy> refreshStrategies
-    ) {
-        FilterRegistrationBean<CookieRefreshFilter> filter = new FilterRegistrationBean<>();
-        filter.setFilter(new CookieRefreshFilter(refreshStrategies, securityProperties));
-        return filter;
     }
 
     /**

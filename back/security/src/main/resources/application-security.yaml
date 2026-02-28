@@ -36,6 +36,7 @@ spring:
       on-profile: "security"
 
 security:
+  mode: PROM
   password:
     count-days-password-expire: 365
     strength: 12 #2^strength итераций хеширования пароля.

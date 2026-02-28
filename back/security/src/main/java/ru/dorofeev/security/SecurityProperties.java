@@ -25,6 +25,11 @@ import java.util.List;
 public class SecurityProperties {
 
     /**
+     * Режим работы модуля безопасности.
+     */
+    private String mode;
+
+    /**
      * Настройки политики паролей.
      */
     @NotNull
