@@ -1,0 +1,21 @@
+spring:
+  config:
+    activate:
+      on-profile: "notification"
+
+notification:
+  mode: PROM
+  kafka-setting:
+    listener:
+      email:
+        topic: BP.NOTIFICATION.EMAIL
+        group-id: BP-EMAIL
+        concurrency: 10
+      sms:
+        topic: BP.NOTIFICATION.SMS
+        group-id: BP-SMS
+        concurrency: 10
+      telegram:
+        topic: BP.NOTIFICATION.TELEGRAM
+        group-id: BP-TELEGRAM
+        concurrency: 10
