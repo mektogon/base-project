@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.session.Session;
+import ru.dorofeev.security.session.section.AbstractAttributeSection;
 import ru.dorofeev.security.session.section.AbstractSection;
 
 import java.util.Collection;
@@ -60,11 +61,10 @@ public interface SessionService {
      * Получить значение атрибута секции.
      *
      * @param section       объект типа {@link AbstractSection}.
-     * @param attributeName атрибут секции.
+     * @param attributeName атрибут секции типа {@link AbstractAttributeSection}.
      * @return значение атрибута из сессии.
      */
-    @SuppressWarnings("rawtypes")
-    <T extends Enum<T>> Object getSectionAttribute(@NotNull AbstractSection section, @NotNull T attributeName);
+    <S extends AbstractSection<?>, A extends AbstractAttributeSection<?>> Object getSectionAttribute(@NotNull S section, @NotNull A attributeName);
 
     /**
      * Получить все атрибуты сессии.

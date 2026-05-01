@@ -1,5 +1,6 @@
 package ru.dorofeev.security.session.section;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,12 +25,12 @@ public interface AbstractSection<T extends Enum<T>> {
     String getDescription();
 
     /**
-     * Получение атрибутного состава секции.
+     * Инициализация атрибутного состава секции.
      */
-    Map<String, Object> getAttributes();
+    Map<String, Object> initialize();
 
     /**
-     * Получить enum класс атрибутов.
+     * Получить список атрибутов.
      */
-    Class<T> getAttributeType();
+    List<T> getAttributes();
 }

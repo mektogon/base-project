@@ -13,8 +13,9 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.Session;
 import org.springframework.stereotype.Service;
-import ru.dorofeev.security.authentication.exception.enums.ErrorType;
 import ru.dorofeev.security.authentication.exception.SecurityException;
+import ru.dorofeev.security.authentication.exception.enums.ErrorType;
+import ru.dorofeev.security.session.section.AbstractAttributeSection;
 import ru.dorofeev.security.session.section.AbstractSection;
 import ru.dorofeev.security.session.strategy.SessionLimitControlStrategy;
 import ru.dorofeev.security.utils.HttpServletUtils;
@@ -105,18 +106,10 @@ public class SessionServiceImpl implements SessionService {
         return Objects.nonNull(sections) ? (List<String>) sections : Collections.emptyList();
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
-    public <T extends Enum<T>> Object getSectionAttribute(@NotNull AbstractSection section, @NotNull T attributeName) {
-        Map<String, Object> sessionAttributes = getSessionAttributes();
-
-        Map<String, Object> sectionData = (Map<String, Object>) sessionAttributes.get(SECTION_SESSION_PREFIX + section.getName());
-        if (MapUtils.isEmpty(sectionData)) {
-            log.debug("Получена пустая секция: '{}'!", section.getName());
-            return null;
-        }
-
-        return sectionData.get(attributeName.name());
+    public <S extends AbstractSection<?>, A extends AbstractAttributeSection<?>> Object getSectionAttribute(S section, A attributeName) {
+        return ((AbstractAttributeSection) attributeName).getValue(section);
     }
 
     @Override
